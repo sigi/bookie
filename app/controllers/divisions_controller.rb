@@ -1,5 +1,6 @@
 class DivisionsController < ApplicationController
 
-  active_scaffold :division
+  before_filter :require_admin
+  active_scaffold
 
 end

@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   
-  active_scaffold :team
+  before_filter :require_admin
+  active_scaffold
 
 end

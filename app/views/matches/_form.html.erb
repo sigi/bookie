@@ -1,0 +1,32 @@
+<%= error_messages_for 'match' %>
+
+<% 
+   all_teams = Team.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] } 
+   all_divisions = Division.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] }
+%>
+
+<!--[form:match]-->
+<table cellspacing="6">
+  <tr>
+    <td>Begegnung:</td>
+    <td><%= select("match", "team1_id", all_teams) %> &ndash; <%= select("match", "team2_id", all_teams) %></td>
+  </tr>
+  <tr>
+    <td>Ergebnis (nach 90 Minuten):</td>
+    <td><%= text_field 'match', 'result1', :size => 2, :maxsize => 2 %> :
+        <%= text_field 'match', 'result2', :size => 2, :maxsize => 2 %></td>
+  </tr>
+  <tr>
+    <td><label for="match_division">Gruppe:</label></td>
+    <td><%= select( "match", "division_id", all_divisions ) %></td>
+  </tr>
+  <tr>
+    <td><label for="match_date">Anpfiff:</label></td>
+    <td><%= datetime_select 'match', 'date'  %></td>
+  </tr>
+  <tr>
+    <td valign="top"><label for="match_info">Info:</label></td>
+    <td><%= text_area 'match', 'info', :rows => 5, :cols => 40  %></td>
+  </tr>
+</table>
+<!--[eoform:match]-->

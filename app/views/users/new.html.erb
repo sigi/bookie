@@ -1,0 +1,11 @@
+<h1>Register</h1>
+
+<% form_for @user, :url => account_path do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= render :partial => "form", :object => f %>
+  </p>
+  <p>
+    <%= f.submit "Register" %>
+  </p>
+<% end %>

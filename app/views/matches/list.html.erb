@@ -1,0 +1,37 @@
+<h2>Begegnungen bearbeiten</h2>
+
+<%= render( :partial => 'shared/matchnavi' ) %>
+
+<% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
+
+<h3><%= @title %></h3>
+
+<p style="text-align:center;"><%= link_to 'Neue Begegnung anlegen', :action => 'new' %></p>
+
+<% if @matches.length > 0 %>
+<table class="matches">
+  <tr>
+    <th>Begegnung</th>
+    <th>Gruppe</th>
+    <th>Ergebnis</th>
+    <th colspan="2">bearb.</th>
+  </tr>
+  
+<% for match in @matches %>
+  <tr>
+    <td><%=h match.team1.name %> &ndash; <%=h match.team2.name %><br/>
+      <%=h match.date.strftime( "%d.%m um %H:%M Uhr" ) %>, <%=h match.info %>
+    </td>
+    <td><%=h match.division.name %></td>
+    <td align="center"><%= match.result %></td>
+    <td colspan="2" align="center"><%= link_to images(:edit), :action => 'edit', :id => match %>
+      <%= link_to images(:delete), { :action => 'destroy', :id => match },
+            :confirm => "Soll die Begegnung \"#{match.team1.name}-#{match.team2.name}\" " +
+	    "wirklich gelöscht werden?  (Alle Tips für diese Begegnung gehen verloren!)",
+	    :post => true %></td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+<p class="notice">Es wurden keine Begegnungen in dieser Auswahl gefunden.</p>
+<% end %>
