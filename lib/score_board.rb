@@ -7,15 +7,17 @@ class ScoreBoard
   def initialize(bets, scorer = ExactScore)
     @results_by_user = {}
     @results = []
-    return if bets.empty?
-
     scores = {}
-    bets.each do |b|
-      score = scorer.score(b)
-      scores[b.user] ||= {
+
+    User.all.each do |u|
+      scores[u] = {
         :score => 0, :submitted => 0, :average => 0.0, :change => 0,
         :wrong => 0, :tendency => 0, :correct => 0, :open => 0, :undef => 0
       }
+    end
+
+    bets.each do |b|
+      score = scorer.score(b)
       scores[b.user][:score] += score.points
       scores[b.user][score.direction] += 1
       scores[b.user][:submitted] += 1 if b.result.played?
