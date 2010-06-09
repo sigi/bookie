@@ -1,9 +1,9 @@
-<%= form.label :real_name %><br />
+<%= form.label :real_name, 'Dein Name' %> (wird anderen Spielern angezeigt)<br />
 <%= form.text_field :real_name %><br />
-<%= form.label :email %><br />
+<%= form.label :email, 'Email-Adresse' %> (wird für die Anmeldung benötigt)<br />
 <%= form.text_field :email %><br />
 <br />
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
+<%= form.label :password, form.object.new_record? ? 'Passwort' : "Passwort ändern" %><br />
 <%= form.password_field :password %><br />
-<%= form.label :password_confirmation %><br />
+<%= form.label :password_confirmation, 'Passwort bestätigen' %><br />
 <%= form.password_field :password_confirmation %><br />
