@@ -30,40 +30,40 @@ Achtung: Admin-Modus!</span><% end %>
 <% if ( current_user.admin && current_user != @query_user ) ||
       ( @special.open? && current_user == @query_user ) %>
   <% form_tag :action => :update_special, :id => @special.id do %>
-  <table style="margin:auto" cellspacing="10">
-  <tr><td>Wer wird Weltmeister 2006?<br/><i>(40 Punkte)</i></td>
-      <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
-  <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
-      <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
-  <tr><td>Welches <i>Team</i> erzielt die meisten Tore?<br/><i>(Geldprämie)</i></td>
-      <td><%= select( 'special', 'special3_id', all_teams) %></td></tr>
-  <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore?<br/><i>(Geldprämie)</i></td>
-      <td><%= select( 'special', 'special4_id', all_teams) %></td></tr>
-  <tr><td>Welches <i>Team</i> kassiert die meisten Treffer?<br/><i>(Geldprämie)</i></td>
-      <td><%= select( 'special', 'special5_id', all_teams) %></td></tr>
-  <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer?<br/><i>(Geldprämie)</i></td>
-      <td><%= select( 'special', 'special6_id', all_teams) %></td></tr>
-  <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
-      <td><%= select( 'special', 'special7', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
-  <tr><td colspan="2" align="center"><%= submit_tag "Sondertipps abspeichern" %></td></tr>
-  </table>
+    <table style="margin:auto" cellspacing="10">
+      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+        <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
+        <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= select( 'special', 'special3_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= select( 'special', 'special4_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= select( 'special', 'special5_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= select( 'special', 'special6_id', all_teams) %></td></tr>
+        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
+          <td><%= select( 'special', 'special7', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
+        <tr><td colspan="2" align="center"><%= submit_tag "Sondertipps abspeichern" %></td></tr>
+      </table>
   <% end %>
 <% else %>
   <table style="margin:auto" cellspacing="10">
-  <tr><th>Frage</th><th>Dein Tipp...</td>
-  <tr><td>Wer wird Weltmeister 2006?<br/><i>(9 Punkte)</i></td>
-      <td><%= @special.special1.name %></td></tr>
-  <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
-      <td><%= @special.special2 %></td>
-  <tr><td>Welches <i>Team</i> erzielt die meisten Tore?<br/><i>(Geldprämie)</i></td>
-      <td><%= @special.special3.name %></td></tr>
-  <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore?<br/><i>(Geldprämie)</i></td>
-      <td><%= @special.special4.name %></td></tr>
-  <tr><td>Welches <i>Team</i> kassiert die meisten Treffer?<br/><i>(Geldprämie)</i></td>
-      <td><%= @special.special5.name %></td></tr>
-  <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer?<br/><i>(Geldprämie)</i></td>
-      <td><%= @special.special6.name %></td></tr>
-  <tr><td>Wie weit kommt Deutschland?<br/><i>(9 Punkte)</i></td>
-      <td><%= @special.special7 %></td></tr>
-  </table>
+    <tr><th>Frage</th><th>Dein Tipp...</td>
+      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+        <td><%= @special.special1.name %></td></tr>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
+        <td><%= @special.special2 %></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= @special.special3.name %></td></tr>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= @special.special4.name %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= @special.special5.name %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+          <td><%= @special.special6.name %></td></tr>
+        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
+          <td><%= @special.special7 %></td></tr>
+      </table>
 <% end %>
