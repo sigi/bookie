@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100607212014) do
+ActiveRecord::Schema.define(:version => 20100609224553) do
 
   create_table "bets", :force => true do |t|
     t.integer  "result1",    :limit => 4, :default => -1, :null => false
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(:version => 20100607212014) do
 
   add_index "bets", ["match_id"], :name => "match_id"
   add_index "bets", ["user_id"], :name => "user_id"
+
+  create_table "comments", :force => true do |t|
+    t.string   "text",       :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "divisions", :force => true do |t|
     t.string "name", :null => false

@@ -1,5 +1,6 @@
 <h3>Menü</h3>
 <!--<li><%#= link_to 'Stammtisch', :controller => '/comments', :action => 'list' %></li>-->
+<li><%= link_to 'Stammtisch', :controller => '/comments', :action => 'list' %></li>
 <li><%= link_to 'Tippen', :controller => '/bets', :action => 'next', :id => 4 %></li>
 <li><%= link_to 'Rangliste', :controller => '/bets', :action => 'scoreboard' %></li>
 <% if current_user.admin %>
