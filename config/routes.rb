@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.root :controller => 'bets', :action => 'next', :id => '4'
+  map.root :controller => 'bets', :action => 'scoreboard'
 
   map.resource :user_session
   map.resource :account, :controller => 'users'

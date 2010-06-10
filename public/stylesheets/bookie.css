@@ -354,3 +354,7 @@ span#betsformatch {
   padding: 0;
   margin: 0.4em 0.3em;
 }
+
+.pagination {
+  text-align: center;
+}
