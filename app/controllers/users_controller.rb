@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_admin, :only => [:register_payments]
 
   skip_before_filter :setup_scoreboard, :set_query_user, :only => [:new, :create]
   
@@ -37,4 +38,10 @@ class UsersController < ApplicationController
       render :action => :edit
     end
   end
+
+  def register_payments
+    User.update_all( "payment_received = 't'", {:id => params[:payment_received]} )
+    redirect_to '/bets/scoreboard'
+  end
+
 end

@@ -1,6 +1,6 @@
 <h2>Rangliste</h2>
 
-<% unless @score_board.results.empty? %>
+<% form_tag '/users/register_payments' do %>
 <table id="scoreboard">
   <tr>
     <th align="center">Rang</th>
@@ -12,6 +12,9 @@
     <th align="center">F</th>
     <th align="center">#</th>
     <th align="center">&Oslash;</th>
+    <% if current_user.admin %>
+      <th align="center">&euro;</th>
+    <% end %>
   </tr>
   <% @score_board.results.each_index do |i| score = @score_board[i] 
      putrank = i==0 || score[:rank] > @score_board[i-1][:rank] %>
@@ -30,9 +33,16 @@
     <td align="right" style="border-right: 1px solid silver"><%= score[:wrong] %></td>
     <td align="right" style="border-right: 1px solid silver"><%= score[:submitted] %></td>
     <td align="right"><%= number_with_precision score[:average], 2 %></td>
+    <% if current_user.admin %>
+      <td><%= check_box_tag 'payment_received[]', score[:user].id, score[:user].payment_received %></td>
+    <% end %>
   </tr>
   <% end %>
 </table>
+  <% if current_user.admin %>
+    <p style="text-align: center;"><%= submit_tag 'Zahlungen speichern' %></p>
+  <% end %>
+<% end %>
 <div style="font-size:70%">
   <p>
     <b>Legende:</b> K/T/F:&nbsp;Anzahl <b>K</b>orrekt/<b>T</b>endenziell/<b>F</b>alsch
@@ -62,6 +72,3 @@
     <tr><td>1:1</td><td>0:1</td><td>0</td><td>Spielausgang falsch getippt; keine Punkte</td></tr>
   </table>
 </div>
-<% else %>
-<p>Im Moment steht keine Rangliste zur Verfügung.</p>
-<% end %>
