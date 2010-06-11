@@ -6,6 +6,8 @@
   und stehst damit auf <b>Rang <%=h @score_board.rank_for(current_user) || '?' %></b>.
 </p>
 
+<p><b>Zur Zeit im Pott: <%= link_to number_to_currency(Prize.jackpot), '/prizes/index' %></b></p>
+
 <p>Viel Spaß beim Tippen!</p><hr/>
 
 <p><b>Nächste Begegnung:</b></p>

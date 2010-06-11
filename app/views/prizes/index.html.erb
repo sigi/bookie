@@ -1,0 +1,33 @@
+<h3>Gewinne</h3>
+
+<p>Jeder Mitspieler sammelt bis zum Ende des Turniers Punkte.  Punkte können
+  erzielt werden durch Tipps auf stattfindende Partien (Gruppen- und Finalphase)
+  sowie einige Sondertipps.  Die Sondertipps beziehen sich auf das Abschneiden
+  einzelner Mannschaften bzw. Spieler während des gesamten Turniers und werden
+  vor Beginn des Turniers abgegeben.</p>
+
+<p>Die so gesammelten Punkte führen zu einer Platzierung in der Rangliste
+  aller Mitspieler.</p>
+
+<p>Alle eingenommenen Einsätze (in Höhe von <%= number_to_currency(Prize::STAKE) %>
+  pro Mitspieler) werden nach dem Turnier an die in der Rangliste führenden
+  Mitspieler ausgezahlt, gestaffelt nach Platzierung.</p>
+
+<p style="font-size: 130%">
+  Die Gesamtsumme im Pott beträgt <b><%= number_to_currency(Prize.jackpot) %></b>.</p>
+
+<p>Die <b>drei höchstplatzierten</b> Mitspieler erhalten eine Auszahlung
+  nach folgender Staffelung:</p>
+<ol style="font-size: 130%">
+  <% @prizes.each do |prize| %>
+    <li>Platz: <%= prize.percentage %>% = <%= number_to_currency(prize.amount) %></li>
+  <% end %>
+</ol>
+
+<p><b>Hinweis:</b> Diese Zahlen gelten unter Vorbehalt.  Falls einzelne Mitspieler
+  ihren Einsatz nicht entrichten und aus dem Spiel ausscheiden reduzieren sich
+  entsprechend die Gewinne.  Die Übersicht gibt die aktuellen Zahlen wieder und
+  kann sich ggf. ändern.</p>
+<p>Selbstverständlich wird die am Ende des Tippspiels im Pott befindliche Summe
+  von mir wie versprochen an die Mitspieler ausgezahlt.  Rechtsansprüche auf Gewinne
+  bestehen jedoch keine.  Vor dem Gesetz spielen hier alle zum Spaß mit.</p>
