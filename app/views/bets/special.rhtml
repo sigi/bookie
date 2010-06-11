@@ -14,11 +14,10 @@
 <% if @query_user == current_user %>
 Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels am 11. Juni
 um 16 Uhr abgegeben worden sein.  Eure Tipps sind <i>beliebig</i> und werden
-nicht auf "Sinnhaftigkeit" geprüft.  Richtige Antwort gibt am Ende Punkte
-(oder Geld), falsche Antwort nix.  Ganz einfach.<br/>
-Die Höhe der Geldprämien wird noch festgelegt; dies wird von der Anzahl der
-Mitspieler abhängen.
-<% else %>
+nicht auf "Sinnhaftigkeit" geprüft.  Richtige Antwort gibt am Ende Punkte,
+falsche Antwort nix.  Ganz einfach.<br/>(Anmerkung: mit »Tore pro Spiel« ist der
+Durchschnittswert gemeint &ndash; also Gesamtzahl Tore geteilt durch Anzahl
+bestrittener Spiele.)<br/> <% else %>
 Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
 vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
 eigenen Tipps zurückzukehren, wähle 'Tippen' aus dem Menü aus.
@@ -33,15 +32,15 @@ Achtung: Admin-Modus!</span><% end %>
     <table style="margin:auto" cellspacing="10">
       <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
         <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
-      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
         <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
-        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= select( 'special', 'special3_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= select( 'special', 'special4_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert die meisten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= select( 'special', 'special5_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= select( 'special', 'special6_id', all_teams) %></td></tr>
         <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
           <td><%= select( 'special', 'special7', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
@@ -53,15 +52,15 @@ Achtung: Admin-Modus!</span><% end %>
     <tr><th>Frage</th><th>Dein Tipp...</td>
       <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
         <td><%= @special.special1.name %></td></tr>
-      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(Geldprämie)</i></td>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
         <td><%= @special.special2 %></td>
-        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= @special.special3.name %></td></tr>
-        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= @special.special4.name %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert die meisten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= @special.special5.name %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert am wenigsten Treffer <i>pro Spiel</i>?<br/><i>(Geldprämie)</i></td>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
           <td><%= @special.special6.name %></td></tr>
         <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
           <td><%= @special.special7 %></td></tr>
