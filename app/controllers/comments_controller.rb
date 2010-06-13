@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     @comments = Comment.paginate(:page => params[:page], 
                                  :order => 'comments.created_at desc',
                                  :include => :user,
-                                 :per_page => 5)
+                                 :per_page => 10)
     #@vote = Vote.find( :first, :conditions => [ 'user_id = ?', @current_user.id ] )
     #if @vote.nil? then @vote = Vote.create( :option => 0, :user => @current_user ) end
   end
