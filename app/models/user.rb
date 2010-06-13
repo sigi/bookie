@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   acts_as_authentic
 
   has_many :bets,       :dependent => :delete_all
-  #has_many :comments,   :dependent => :delete_all
+  has_many :comments,   :dependent => :delete_all
   has_one  :specialbet, :dependent => :destroy
 
   after_create :create_bets
