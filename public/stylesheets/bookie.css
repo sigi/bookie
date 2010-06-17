@@ -251,7 +251,7 @@ table#scoreboard {
   font-size: 12px;
   margin: auto;
   border-collapse: collapse;
-  border: 1px solid silver;
+  border: 1px solid brown;
 }
 
 table#scoreboard tr.odd { 
