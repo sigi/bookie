@@ -45,6 +45,15 @@
 
       <!-- Hauptteil -->
       <div id="content">
+        <% if current_user && current_user.wagering && !current_user.payment_received %>
+          <div style="margin-bottom: 1ex; padding: 1ex; font-size: 130%; font-weight: bold; border: 2px solid red;">
+            Falls du den Spieleinsatz noch nicht entrichtet hast: Tu es. Jetzt.
+            Bei Fragen: <tt><a href="mailto:frank@luithle.net">frank@luithle.net</a></tt>
+            <div style="font-size: 50%;">Diese Meldung wird dir angezeigt weil bei mir
+              noch kein Geld eingetroffen ist. Sie wird bald nicht mehr angezeigt werden, weil
+              deine Kennung dann gelöscht wird :-).</div>
+          </div>
+        <% end %>
         <%= yield %>
       </div>
       <!-- Hauptteil Ende -->
