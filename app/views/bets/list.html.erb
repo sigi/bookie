@@ -43,9 +43,10 @@
      klass = @bet.score.direction.to_s
  %>
   <tr>
-    <td><%= if @bet.closed? then 
-              link_to( @bet.match.to_s, {:action => "bets_for_match", :id => @bet.match.id}, :remote => true )
-            else @bet.match.to_s end %><br/>
+    <%#<td><%= if @bet.closed? then %>
+              <%#link_to( @bet.match.to_s, {:action => "bets_for_match", :id => @bet.match.id}, :remote => true )%>
+            <%#else @bet.match.to_s end %>
+    <td><%= @bet.match.to_s %><br/>
       <%= @bet.match.date_string %>, <%= @bet.match.info %></td>
     <td><%= link_to @bet.match.division.name, :action => 'division', :id => @bet.match.division.id %></td>
     <td align="center">
