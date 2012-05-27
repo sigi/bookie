@@ -30,7 +30,7 @@ Achtung: Admin-Modus!</span><% end %>
       ( @special.open? && current_user == @query_user ) %>
   <%= form_tag :action => :update_special, :id => @special.id do %>
     <table style="margin:auto" cellspacing="10">
-      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+      <tr><td>Wer wird Europameister 2012?<br/><i>(40 Punkte)</i></td>
         <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
       <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
         <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
