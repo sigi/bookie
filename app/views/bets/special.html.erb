@@ -12,15 +12,15 @@
 
 <p style="width:600px;margin: auto; margin-bottom: 1em;font-size:small;">
 <% if @query_user == current_user %>
-Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels am 11. Juni
-um 16 Uhr abgegeben worden sein.  Eure Tipps sind <i>beliebig</i> und werden
-nicht auf "Sinnhaftigkeit" geprüft.  Richtige Antwort gibt am Ende Punkte,
+Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels abgegeben
+worden sein.  Eure Tipps sind <i>beliebig</i> und werden nicht auf
+Sinnhaftigkeit geprüft.  Richtige Antwort gibt am Ende Punkte,
 falsche Antwort nix.  Ganz einfach.<br/>(Anmerkung: mit »Tore pro Spiel« ist der
 Durchschnittswert gemeint &ndash; also Gesamtzahl Tore geteilt durch Anzahl
 bestrittener Spiele.)<br/> <% else %>
 Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
 vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
-eigenen Tipps zurückzukehren, wähle 'Tippen' aus dem Menü aus.
+eigenen Tipps zurückzukehren, wähle »Tippen« aus dem Menü aus.
 <% if current_user.admin %><span style="background:red;color:white">
 Achtung: Admin-Modus!</span><% end %>
 <% end %>
