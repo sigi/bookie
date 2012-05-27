@@ -1,5 +1,7 @@
 class Bet < ActiveRecord::Base
 
+  attr_accessible :result1, :result2, :user, :match
+
   belongs_to :user
   belongs_to :match, :include => :division
 

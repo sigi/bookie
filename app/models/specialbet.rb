@@ -1,5 +1,8 @@
 class Specialbet < ActiveRecord::Base
 
+  attr_accessible :user, :special1, :special2, :special3, :special4,
+                  :special5, :special6, :special7
+
   belongs_to :user
   belongs_to :special1, :foreign_key => 'special1_id', :class_name => 'Team'
   belongs_to :special3, :foreign_key => 'special3_id', :class_name => 'Team'

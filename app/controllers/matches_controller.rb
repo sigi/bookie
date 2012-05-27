@@ -1,9 +1,7 @@
+# vim: fileencoding=utf-8
 class MatchesController < ApplicationController
 
   before_filter :require_admin
-
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
 
   def index
     list

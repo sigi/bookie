@@ -1,0 +1,20 @@
+<h2>Stammtisch</h2>
+
+<% if flash[:note] %><p class="notice"><%= flash[:note] %></p><% end %>
+
+<div style="text-align:center">
+ <%= link_to 'Jetzt sag ich mal was!', :action => 'new' %>
+</div>
+
+<% for c in @comments %>
+<div id="comment">
+ <div class="header">
+  <b><%= c.user.real_name %></b> schrieb vor <%= time_ago_in_words( c.created_at ) %>:
+ </div>
+ <div class="body">
+  <%= auto_link(simple_format(c.text)) %>
+ </div>
+</div>
+<% end %>
+
+<%= will_paginate @comments, :previous_label => '« zurück', :next_label => '» vor' %>

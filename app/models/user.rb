@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 
   acts_as_authentic
 
+  attr_accessible :real_name, :email, :password, :password_confirmation
+
   has_many :bets,       :dependent => :delete_all
   has_many :comments,   :dependent => :delete_all
   has_one  :specialbet, :dependent => :destroy

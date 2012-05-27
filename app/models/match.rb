@@ -12,10 +12,9 @@ class Match < ActiveRecord::Base
                              [ :result2, :r2 ] ] )
 
   validates_numericality_of :result1, :result2, :only_integer => true
+  validate :grouping, on: :create
 
-  named_scope :next, lambda { |count|
-    { :conditions => [ 'date > ?', Time.now.utc ], :order => 'date asc', :limit => count }
-  }
+  scope :next, lambda { |count| where("date > ?", Time.now.utc).order("date ASC").limit(count) }
 
   def validate
     unless team1.id != team2.id
@@ -23,7 +22,7 @@ class Match < ActiveRecord::Base
     end
   end
 
-  def validate_on_create
+  def grouping
     count = Match.count( :all,
                          :conditions => [ 'division_id = :div and ' +
                                           '( team1_id = :team1 and team2_id = :team2 ' +
@@ -35,11 +34,11 @@ class Match < ActiveRecord::Base
   end
 
   def to_s
-    "#{team1.name}&nbsp;&ndash;&nbsp;#{team2.name}"
+    "#{team1.name}&nbsp;&ndash;&nbsp;#{team2.name}".html_safe
   end
 
   def date_string
-    date.strftime( "%d.%m. um %H:%M&nbsp;Uhr" )
+    date.strftime( "%d.%m. um %H:%M&nbsp;Uhr" ).html_safe
   end
 
 private

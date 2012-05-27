@@ -1,7 +1,5 @@
+# vim: fileencoding=utf-8
 class CommentsController < ApplicationController
-
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
 
   def list
     @comments = Comment.paginate(:page => params[:page], 

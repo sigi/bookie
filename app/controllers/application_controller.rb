@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   helper :all
   protect_from_forgery
 
-  filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
   before_filter :require_user, :setup_scoreboard, :set_query_user
@@ -39,7 +38,7 @@ protected
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)

@@ -1,0 +1,68 @@
+<% 
+   all_teams = Team.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] } 
+%>
+
+<h2>Tipps von Spieler '<%= @query_user.real_name %>'</h2>
+
+<%= render( :partial => 'shared/matchnavi' ) %>
+
+<% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
+
+<h3>Sondertipps</h3>
+
+<p style="width:600px;margin: auto; margin-bottom: 1em;font-size:small;">
+<% if @query_user == current_user %>
+Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels am 11. Juni
+um 16 Uhr abgegeben worden sein.  Eure Tipps sind <i>beliebig</i> und werden
+nicht auf "Sinnhaftigkeit" geprüft.  Richtige Antwort gibt am Ende Punkte,
+falsche Antwort nix.  Ganz einfach.<br/>(Anmerkung: mit »Tore pro Spiel« ist der
+Durchschnittswert gemeint &ndash; also Gesamtzahl Tore geteilt durch Anzahl
+bestrittener Spiele.)<br/> <% else %>
+Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
+vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
+eigenen Tipps zurückzukehren, wähle 'Tippen' aus dem Menü aus.
+<% if current_user.admin %><span style="background:red;color:white">
+Achtung: Admin-Modus!</span><% end %>
+<% end %>
+</p>
+
+<% if ( current_user.admin && current_user != @query_user ) ||
+      ( @special.open? && current_user == @query_user ) %>
+  <%= form_tag :action => :update_special, :id => @special.id do %>
+    <table style="margin:auto" cellspacing="10">
+      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+        <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
+        <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= select( 'special', 'special3_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= select( 'special', 'special4_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= select( 'special', 'special5_id', all_teams) %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= select( 'special', 'special6_id', all_teams) %></td></tr>
+        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
+          <td><%= select( 'special', 'special7', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
+        <tr><td colspan="2" align="center"><%= submit_tag "Sondertipps abspeichern" %></td></tr>
+      </table>
+  <% end %>
+<% else %>
+  <table style="margin:auto" cellspacing="10">
+    <tr><th>Frage</th><th>Dein Tipp...</td>
+      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+        <td><%= @special.special1.name %></td></tr>
+      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
+        <td><%= @special.special2 %></td>
+        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= @special.special3.name %></td></tr>
+        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= @special.special4.name %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= @special.special5.name %></td></tr>
+        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
+          <td><%= @special.special6.name %></td></tr>
+        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
+          <td><%= @special.special7 %></td></tr>
+      </table>
+<% end %>

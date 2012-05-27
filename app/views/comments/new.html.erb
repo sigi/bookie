@@ -1,0 +1,10 @@
+<h3>Dampf ablassen</h3>
+
+<%= form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <p style="text-align:center;"><%= submit_tag "Hört hört!" %></p>
+<% end %>
+
+<p style="text-align:center;">
+ <%= link_to 'Zurück zur Liste', :action => 'list' %>
+</p>

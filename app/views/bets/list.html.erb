@@ -1,0 +1,77 @@
+<h2>Tipps von Spieler '<%= @query_user.real_name %>'</h2>
+
+<% size_options = { :size => "2", :maxsize => "1" } %>
+
+<%= render( :partial => 'shared/matchnavi' ) %>
+
+<% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
+
+<h3><%= @title %></h3>
+
+<p style="width:600px;margin: auto; margin-bottom: 1em;font-size:small;"> 
+<% if @query_user == current_user %>
+  Die Annahmestelle schließt 5 Minuten vor offiziellem Spielbeginn; es
+  gilt die Server-Uhrzeit (siehe links oben).  Getippt wird das Ergebnis
+  nach 90 Minuten (plus Nachspielzeit); Verlängerung und Elfmeterschießen
+  spielen für das Tippspiel keine Rolle!<br/>
+  <strong>Reklamation und Umtausch ausgeschlossen!</strong>
+  Vielen Dank für die Beachtung aller Sicherheitshinweise.
+<% else %>
+  Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
+  vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
+  eigenen Tipps zurückzukehren, wähle 'Tippen' aus dem Menü aus.
+    <% if current_user.admin %>
+      <span style="background:red;color:white">Achtung: Admin-Modus!</span>
+    <% end %>
+<% end %>
+</p>
+
+<% if not @bets.empty? %>
+<%= form_tag :action => :update, :division => @division do %>
+
+<table class="matches">
+  <tr>
+      <th>Begegnung</th>
+      <th>Gruppe</th>
+      <th>Tipp</th>
+      <th>Ergebnis</th>
+      <th>P.</th>
+  </tr>
+ 
+<% for @bet in @bets
+     score = @bet.score.points
+     klass = @bet.score.direction.to_s
+ %>
+  <tr>
+    <td><%= if @bet.closed? then 
+              link_to( @bet.match.to_s, {:action => "bets_for_match", :id => @bet.match.id}, :remote => true )
+            else @bet.match.to_s end %><br/>
+      <%= @bet.match.date_string %>, <%= @bet.match.info %></td>
+    <td><%= link_to @bet.match.division.name, :action => 'division', :id => @bet.match.division.id %></td>
+    <td align="center">
+    <% if ( current_user.admin && current_user != @query_user ) ||
+          ( @bet.open? && current_user == @query_user )
+	  display_submit = true %>
+      <%= text_field( "bet[]", "r1", size_options ) %>&nbsp;:
+      <%= text_field( "bet[]", "r2", size_options ) %></td>
+    <% else if @bet.closed? then %>
+      <%=h @bet.result %>
+    <% else %>
+      geheim
+    <% end; end %></td>
+    <td align="center"><%=h @bet.match.result %></td>
+    <td id="score" class="<%= klass %>" align="center"><%= score %></td>
+  </tr>
+  <tr id="match_row_<%= @bet.match.id %>" style="display:none;">
+    <td style="white-space:normal" id="match_col_<%= @bet.match.id %>" colspan="5"></td>
+  </tr>
+<% end %>
+  <% if display_submit %>
+  <tr><td colspan="5" align="center"><%= submit_tag "Wetten abspeichern" %></td></tr>
+  <% end %>
+</table>
+
+<% end %>
+<% else %>
+<p class="notice">Es sind keine Begegnungen in dieser Auswahl vorhanden.</p>
+<% end %>

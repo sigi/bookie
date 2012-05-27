@@ -2,9 +2,6 @@ require 'result'
 
 class BetsController < ApplicationController
 
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
-
   def index
     list
     render :action => 'list'
