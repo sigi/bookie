@@ -12,7 +12,7 @@ class Specialbet < ActiveRecord::Base
 
   def open?
     first_match = Match.find( :first, :order => 'date asc' )
-    5.minutes.from_now < first_match.date
+    first_match && 5.minutes.from_now < first_match.date
   end
 
 end

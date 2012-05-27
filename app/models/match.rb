@@ -1,5 +1,7 @@
 class Match < ActiveRecord::Base
 
+  attr_accessible :team1_id, :team2_id, :result1, :result2, :division_id, :date, :info
+
   belongs_to :team1, :foreign_key => "team1_id", :class_name => "Team"
   belongs_to :team2, :foreign_key => "team2_id", :class_name => "Team"
   belongs_to :division
@@ -12,26 +14,9 @@ class Match < ActiveRecord::Base
                              [ :result2, :r2 ] ] )
 
   validates_numericality_of :result1, :result2, :only_integer => true
-  validate :grouping, on: :create
+  validate :grouping, :valid_opponent, on: :create
 
   scope :next, lambda { |count| where("date > ?", Time.now.utc).order("date ASC").limit(count) }
-
-  def validate
-    unless team1.id != team2.id
-      errors.add_to_base( "Die Mannschaft spielt gegen sich selbst..." )
-    end
-  end
-
-  def grouping
-    count = Match.count( :all,
-                         :conditions => [ 'division_id = :div and ' +
-                                          '( team1_id = :team1 and team2_id = :team2 ' +
-                                          'or team2_id = :team1 and team1_id = :team2 )',
-                                          { :div => division.id, :team1 => team1.id, :team2 => team2.id } ] )
-    if count > 0
-      errors.add_to_base( "Diese Paarung existiert bereits in dieser Gruppe (vielleicht in anderer Reihenfolge)." );
-    end
-  end
 
   def to_s
     "#{team1.name}&nbsp;&ndash;&nbsp;#{team2.name}".html_safe
@@ -42,6 +27,23 @@ class Match < ActiveRecord::Base
   end
 
 private
+
+  def valid_opponent
+    unless team1.id != team2.id
+      errors.add( :base, "Die Mannschaft spielt gegen sich selbst..." )
+    end
+  end
+
+  def grouping
+    count = Match.count( :all,
+                         :conditions => [ 'division_id = :div and ' +
+                                          '( team1_id = :team1 and team2_id = :team2 ' +
+                                          'or team2_id = :team1 and team1_id = :team2 )',
+                                          { :div => division.id, :team1 => team1.id, :team2 => team2.id } ] )
+    if count > 0
+      errors.add( :base, "Diese Paarung existiert bereits in dieser Gruppe (vielleicht in anderer Reihenfolge)." );
+    end
+  end
 
   def create_bets
     User.all.each do |u|
