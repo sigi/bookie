@@ -55,11 +55,8 @@ ActiveRecord::Schema.define(:version => 20100611022358) do
   create_table "specialbets", :force => true do |t|
     t.integer  "special1_id", :default => 1, :null => false
     t.string   "special2"
-    t.integer  "special3_id", :default => 1, :null => false
-    t.integer  "special4_id", :default => 1, :null => false
-    t.integer  "special5_id", :default => 1, :null => false
-    t.integer  "special6_id", :default => 1, :null => false
-    t.string   "special7"
+    t.string   "special3"
+    t.string   "special4"
     t.integer  "user_id",                    :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
