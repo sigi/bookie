@@ -1,6 +1,6 @@
 <%= form.label :real_name, 'Dein Name' %> (wird anderen Spielern angezeigt)<br />
 <%= form.text_field :real_name %><br />
-<%= form.label :email, 'Email-Adresse' %> (wird für die Anmeldung benötigt)<br />
+<%= form.label :email, 'Email-Adresse' %> (wird zum Einloggen benötigt; wird niemandem angezeigt)<br />
 <%= form.text_field :email %><br />
 <br />
 <%= form.label :password, form.object.new_record? ? 'Passwort' : "Passwort ändern" %><br />

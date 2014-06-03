@@ -3,11 +3,8 @@ class Specialbet < ActiveRecord::Migration
     create_table :specialbets do |t|
       t.integer :special1_id, :null => false, :default => 1
       t.string  :special2
-      t.integer :special3_id, :null => false, :default => 1
-      t.integer :special4_id, :null => false, :default => 1
-      t.integer :special5_id, :null => false, :default => 1
-      t.integer :special6_id, :null => false, :default => 1
-      t.string  :special7
+      t.string  :special3
+      t.string  :special4
       t.integer :user_id, :null => false
       t.timestamps
     end

@@ -65,7 +65,7 @@ class BetsController < ApplicationController
 
   def special
     @special = Specialbet.find( :first, :conditions => [ 'user_id = ?', @query_user.id ],
-                                :include => [ :special1, :special3, :special4, :special5, :special6 ] )
+                                :include => [ :special1 ] )
     @special ||= Specialbet.create( :user => @query_user )
   end
 

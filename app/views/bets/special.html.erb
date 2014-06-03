@@ -15,9 +15,7 @@
 Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels abgegeben
 worden sein.  Eure Tipps sind <i>beliebig</i> und werden nicht auf
 Sinnhaftigkeit geprüft.  Richtige Antwort gibt am Ende Punkte,
-falsche Antwort nix.  Ganz einfach.<br/>(Anmerkung: mit »Tore pro Spiel« ist der
-Durchschnittswert gemeint &ndash; also Gesamtzahl Tore geteilt durch Anzahl
-bestrittener Spiele.)<br/> <% else %>
+falsche Antwort nix.<br/><% else %>
 Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
 vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
 eigenen Tipps zurückzukehren, wähle »Tippen« aus dem Menü aus.
@@ -30,39 +28,27 @@ Achtung: Admin-Modus!</span><% end %>
       ( @special.open? && current_user == @query_user ) %>
   <%= form_tag :action => :update_special, :id => @special.id do %>
     <table style="margin:auto" cellspacing="10">
-      <tr><td>Wer wird Europameister 2012?<br/><i>(40 Punkte)</i></td>
+      <tr><td>Wer wird Weltmeister 2014?<br/><i>(20 Punkte)</i></td>
         <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
-      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
-        <td><%= text_field 'special', 'special2', :size => 30, :maxsize => 255 %></td>
-        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= select( 'special', 'special3_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= select( 'special', 'special4_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= select( 'special', 'special5_id', all_teams) %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= select( 'special', 'special6_id', all_teams) %></td></tr>
-        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
-          <td><%= select( 'special', 'special7', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
+      <tr><td>Wie weit kommt Deutschland?<br/><i>(10 Punkte)</i></td>
+        <td><%= select( 'special', 'special2', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
+      <tr><td>Wie weit kommt Brasilien?<br/><i>(10 Punkte)</i></td>
+        <td><%= select( 'special', 'special3', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
+      <tr><td>Wie weit kommt Italien?<br/><i>(10 Punkte)</i></td>
+        <td><%= select( 'special', 'special4', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
         <tr><td colspan="2" align="center"><%= submit_tag "Sondertipps abspeichern" %></td></tr>
       </table>
   <% end %>
 <% else %>
   <table style="margin:auto" cellspacing="10">
     <tr><th>Frage</th><th>Dein Tipp...</td>
-      <tr><td>Wer wird Weltmeister 2010?<br/><i>(40 Punkte)</i></td>
+      <tr><td>Wer wird Weltmeister 2014?<br/><i>(20 Punkte)</i></td>
         <td><%= @special.special1.name %></td></tr>
-      <tr><td>Welcher <i>Spieler</i> wird Torschützenkönig des Turniers?<br/><i>(30 Punkte)</i></td>
-        <td><%= @special.special2 %></td>
-        <tr><td>Welches <i>Team</i> erzielt die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= @special.special3.name %></td></tr>
-        <tr><td>Welches <i>Team</i> erzielt die wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= @special.special4.name %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert die meisten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= @special.special5.name %></td></tr>
-        <tr><td>Welches <i>Team</i> kassiert am wenigsten Tore <i>pro Spiel</i>?<br/><i>(15 Punkte)</i></td>
-          <td><%= @special.special6.name %></td></tr>
-        <tr><td>Wie weit kommt Deutschland?<br/><i>(20 Punkte)</i></td>
-          <td><%= @special.special7 %></td></tr>
+      <tr><td>Wie weit kommt Deutschland?<br/><i>(10 Punkte)</i></td>
+        <td><%= @special.special2 %></td></tr>
+      <tr><td>Wie weit kommt Brasilien?<br/><i>(10 Punkte)</i></td>
+        <td><%= @special.special3 %></td></tr>
+      <tr><td>Wie weit kommt Italien?<br/><i>(10 Punkte)</i></td>
+        <td><%= @special.special4 %></td></tr>
       </table>
 <% end %>
