@@ -1,6 +1,6 @@
 <h2>Rangliste</h2>
 
-<%= form_tag '/users/register_payments' do %>
+<%= form_tag url_for(:controller => "/users", :action => "register_payments") do %>
 <table id="scoreboard">
   <tr>
     <th align="center">Rang</th>

@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   def register_payments
     User.update_all( "payment_received = 't'", {:id => params[:payment_received]} )
-    redirect_to '/bets/scoreboard'
+    redirect_to :controller => "/bets", :action => "scoreboard"
   end
 
 end
