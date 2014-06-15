@@ -2,15 +2,15 @@
 
 <%= form_tag url_for(:controller => "/users", :action => "register_payments") do %>
 <table id="scoreboard">
-  <tr>
-    <th align="center">Rang</th>
-    <th align="center">Spieler</th>
-    <th align="center">Punkte</th>
-    <th align="center">&Delta;</th>
+  <tr style="border: 1px solid black;">
+    <th align="center">Pkt.</th>
+    <th align="center"></th>
+    <th align="center" style="border-right: 1px solid white;">Rang</th>
+    <th align="center" style="border-right: 1px solid white;" colspan="4">Punktverlauf</th>
     <th align="center">K</th>
     <th align="center">T</th>
-    <th align="center">F</th>
-    <th align="center">#</th>
+    <th align="center" style="border-right: 1px solid white;">F</th>
+    <th align="center" style="border-right: 1px solid white;">#</th>
     <th align="center">&Oslash;</th>
     <% if current_user.admin %>
       <th align="center">&euro;</th>
@@ -20,24 +20,26 @@
     score = @score_board[i]
     putrank = i==0 || score[:rank] > @score_board[i-1][:rank]
     prize = Prize.new(score[:rank])
-    scale = 100 + (prize.percentage * 0.7).to_i
-    style = "font-size: #{scale}%;"
+    # scale = 100 + (prize.percentage * 0.7).to_i
+    style = "font-size: 100%;"
     style += 'border-top: 1px solid silver;' if putrank
     style += 'border-color: brown; border-width: 2px;' if score[:rank] == Prize::PROGRESSION.length + 1
   %>
   <tr style="<%= style -%>" class="<%= i%2 == 0 ? 'even' : 'odd' %>">
-    <td align="right"> <%=h score[:rank] if putrank %> </td>
+    <td align="right">
+      <b><%=h score[:score] if putrank %></b></td>
     <td><%= link_to score[:user].real_name, { :controller => 'bets',
             :action => 'last', :id => 4, :uid => score[:user].id },
             { :class => 'uid_link' } %></td>
-    <td  style="border-right: 1px solid silver" align="right">
-      <%=h score[:score] if putrank %></td>
-    <td align="center" style="border-right: 1px solid silver"><span class="change_<%= score[:change] %>">
-      <%= if score[:change] > 0 then "+#{score[:change]}" else "=" end %></span></td>
-    <td align="right"><%= score[:correct] %></td>
+    <td style="border-right: 2px solid silver" align="right"> <%=h score[:rank] if putrank %> </td>
+    <% score[:change].last(4).each do |s| -%>
+    <td align="right"><span class="change_1>">
+      <%= s %></span></td>
+    <% end -%>
+    <td align="right" style="border-left: 2px solid silver"><%= score[:correct] %></td>
     <td align="right"><%= score[:tendency] %></td>
-    <td align="right" style="border-right: 1px solid silver"><%= score[:wrong] %></td>
-    <td align="right" style="border-right: 1px solid silver"><%= score[:submitted] %></td>
+    <td align="right" style="border-right: 2px solid silver"><%= score[:wrong] %></td>
+    <td align="right" style="border-right: 2px solid silver"><%= score[:submitted] %></td>
     <td align="right"><%= number_with_precision score[:average], precision: 2 %></td>
     <% if current_user.admin %>
       <td><%= check_box_tag 'payment_received[]', score[:user].id, score[:user].payment_received %></td>

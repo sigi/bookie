@@ -11,7 +11,7 @@ class ScoreBoard
 
     User.all.each do |u|
       scores[u] = {
-        :score => 0, :submitted => 0, :average => 0.0, :change => 0,
+        :score => 0, :submitted => 0, :average => 0.0, :change => [0, 0, 0, 0],
         :wrong => 0, :tendency => 0, :correct => 0, :open => 0, :undef => 0
       }
     end
@@ -22,7 +22,7 @@ class ScoreBoard
       scores[b.user][score.direction] += 1
       scores[b.user][:submitted] += 1 if b.result.played?
       # wird in der letzten Iteration korrekt zugewiesen:
-      scores[b.user][:change] = score.points
+      scores[b.user][:change] << score.points
     end
 
     scores_ary = scores.sort { |a,b|
