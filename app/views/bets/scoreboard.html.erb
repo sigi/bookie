@@ -1,11 +1,10 @@
 <h2>Rangliste</h2>
 
 <%= form_tag url_for(:controller => "/users", :action => "register_payments") do %>
-<table id="scoreboard">
+<table id="scoreboard" style="color: rgb(140, 140, 140);">
   <tr style="border: 1px solid black;">
-    <th align="center">Pkt.</th>
-    <th align="center"></th>
-    <th align="center" style="border-right: 1px solid white;">Rang</th>
+    <th colspan="2">Platzierung</th>
+    <th align="center" style="border-right: 1px solid white;">Pkt.</th>
     <th align="center" style="border-right: 1px solid white;" colspan="4">Punktverlauf</th>
     <th align="center">K</th>
     <th align="center">T</th>
@@ -18,23 +17,22 @@
   </tr>
   <% @score_board.results.each_index do |i|
     score = @score_board[i]
-    putrank = i==0 || score[:rank] > @score_board[i-1][:rank]
     prize = Prize.new(score[:rank])
-    # scale = 100 + (prize.percentage * 0.7).to_i
-    style = "font-size: 100%;"
-    style += 'border-top: 1px solid silver;' if putrank
-    style += 'border-color: brown; border-width: 2px;' if score[:rank] == Prize::PROGRESSION.length + 1
+    rowclass = if score[:rank] <= Prize::PROGRESSION.length
+                 "topscore "
+               else
+                 ""
+               end 
   %>
-  <tr style="<%= style -%>" class="<%= i%2 == 0 ? 'even' : 'odd' %>">
-    <td align="right">
-      <b><%=h score[:score] if putrank %></b></td>
+  <tr class="<%= rowclass %><%= i%2 == 0 ? 'even' : 'odd' %>">
+    <td style="color: black;" align="right"> <%=h score[:rank] %> </td>
     <td><%= link_to score[:user].real_name, { :controller => 'bets',
             :action => 'last', :id => 4, :uid => score[:user].id },
             { :class => 'uid_link' } %></td>
-    <td style="border-right: 2px solid silver" align="right"> <%=h score[:rank] if putrank %> </td>
-    <% score[:change].last(4).each do |s| -%>
-    <td align="right"><span class="change_1>">
-      <%= s %></span></td>
+    <td style="color: black; border-right: 2px solid silver" align="right">
+      <b><%=h score[:score] %></b></td>
+    <% score[:change].last(4).each_with_index do |s, i| -%>
+    <td align="right"><%= s %></td>
     <% end -%>
     <td align="right" style="border-left: 2px solid silver"><%= score[:correct] %></td>
     <td align="right"><%= score[:tendency] %></td>
