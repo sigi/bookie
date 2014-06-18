@@ -30,8 +30,14 @@
   <tr class="<%= rowclass %><%= i%2 == 0 ? 'even' : 'odd' %>">
     <td style="color: black;" align="right"> <%=h putrank && score[:rank] || "" %> </td>
     <td><%= link_to score[:user].real_name, { :controller => 'bets',
-            :action => 'last', :id => 4, :uid => score[:user].id },
-            { :class => 'uid_link' } %></td>
+            :action => 'last', :id => 4, :uid => score[:user].id }, { :class => 'uid_link' } %>
+          <% if @hof[:correct].select {|e| e[:user] == score[:user] }.any? %>
+              <%= image_tag 'star_medal_gold_small.png' %>
+          <% end %>
+          <% if @hof[:tendency].select {|e| e[:user] == score[:user] }.any? %>
+              <%= image_tag 'star_medal_silver_small.png' %>
+          <% end %>
+    </td>
     <td class="rightline" style="color: black;" align="right">
       <b><%=h score[:score] %></b></td>
     <% score[:change].last(4).each_with_index do |s, i| -%>
