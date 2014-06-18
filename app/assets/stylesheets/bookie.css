@@ -1,7 +1,7 @@
 body {
   font-family: verdana, "Lucida Grande", arial, helvetica, sans-serif;
   text-align: center;  /* Zentrierung im Internet Explorer */
-  font-size:14px;
+  font-size: 14px;
   margin-top: 1em;
   background: white;
 }
@@ -26,16 +26,16 @@ a:hover {
 }
 
 #container {
-  width:900px;
-  margin:0 auto;
-  text-align:left;
+  width: 900px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 #sidebar {
   position: absolute;
   width: 270px;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 #content {
@@ -51,7 +51,7 @@ a:hover {
 }
 
 h1,h2,h3,h4,h5,h6 { 
-  text-align:center;
+  text-align: center;
 }
 
 #quickscore {
@@ -63,7 +63,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 #quickscore table {
-  text-align:left;
+  text-align: left;
   margin: auto;
   border-spacing: 0.5em;
 }
@@ -251,7 +251,14 @@ table#scoreboard {
   font-size: 12px;
   margin: auto;
   border-collapse: collapse;
-  border: 1px solid brown;
+  border: 1px solid #e5e5ba;
+}
+
+table#scoreboard td.leftline { 
+  border-left: 2px solid #e5e5ba;
+}
+table#scoreboard td.rightline { 
+  border-right: 2px solid #e5e5ba;
 }
 
 table#scoreboard tr.odd { 
@@ -261,6 +268,27 @@ table#scoreboard tr.odd {
 table#scoreboard tr.even { 
   background: #f8f8cc;
 }
+
+table#scoreboard tr.newrank { 
+  border-top: 1px solid #e5e5ba;
+}
+
+table#scoreboard tr.endtop { 
+  border-top: 1px solid brown;
+  padding-top: 1em;
+}
+
+table#scoreboard .topscore {
+  font-size: 15px;
+}
+
+/* table#scoreboard tr.odd.topscore {  */
+/*   background: #ffe3b8 */
+/* } */
+/*  */
+/* table#scoreboard tr.even.topscore {  */
+/*   background: #ffedcc */
+/* } */
 
 table#scoreboard td, table#scoreboard th { 
   padding: 2px 5px;

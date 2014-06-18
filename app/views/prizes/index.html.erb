@@ -16,13 +16,13 @@
 <p style="font-size: 130%">
   Die Gesamtsumme im Pott beträgt <b><%= number_to_currency(Prize.jackpot) %></b>.</p>
 
-<p>Die <b>drei höchstplatzierten</b> Mitspieler erhalten eine Auszahlung
+<p>Die <b><%= Prize::PROGRESSION.length %> bestplatzierten</b> Mitspieler erhalten eine Auszahlung
   nach folgender Staffelung:</p>
-<ol style="font-size: 130%">
-  <% @prizes.each do |prize| %>
-    <li>Platz: <%= prize.percentage %>% = <%= number_to_currency(prize.amount) %></li>
+<table style="font-size: 130%" cellspacing="7">
+  <% @prizes.each_with_index do |prize, i| %>
+    <tr><td>Platz <%= i+1 %>:</td><td align="right"><%= prize.percentage %>%</td><td align="right">(<%= number_to_currency(prize.amount) %>)</td></tr>
   <% end %>
-</ol>
+</table>
 
 <p><b>Hinweis:</b> Diese Zahlen gelten unter Vorbehalt.  Falls einzelne Mitspieler
   ihren Einsatz nicht entrichten und aus dem Spiel ausscheiden reduzieren sich

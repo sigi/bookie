@@ -15,35 +15,38 @@
       <th align="center">&euro;</th>
     <% end %>
   </tr>
-  <% @score_board.results.each_index do |i|
-    score = @score_board[i]
-    prize = Prize.new(score[:rank])
-    rowclass = if score[:rank] <= Prize::PROGRESSION.length
-                 "topscore "
-               else
-                 ""
-               end 
-  %>
+<% @score_board.results.each_index do |i|
+  score = @score_board[i]
+  putrank = i==0 || score[:rank] > @score_board[i-1][:rank]
+  prize = Prize.new(score[:rank])
+  rowclass = if i < Prize::PROGRESSION.length
+                "topscore "
+              else
+                ""
+              end 
+  rowclass += "newrank " if putrank
+  rowclass += "endtop " if i == Prize::PROGRESSION.length
+-%>
   <tr class="<%= rowclass %><%= i%2 == 0 ? 'even' : 'odd' %>">
-    <td style="color: black;" align="right"> <%=h score[:rank] %> </td>
+    <td style="color: black;" align="right"> <%=h putrank && score[:rank] || "" %> </td>
     <td><%= link_to score[:user].real_name, { :controller => 'bets',
             :action => 'last', :id => 4, :uid => score[:user].id },
             { :class => 'uid_link' } %></td>
-    <td style="color: black; border-right: 2px solid silver" align="right">
+    <td class="rightline" style="color: black;" align="right">
       <b><%=h score[:score] %></b></td>
     <% score[:change].last(4).each_with_index do |s, i| -%>
     <td align="right"><%= s %></td>
     <% end -%>
-    <td align="right" style="border-left: 2px solid silver"><%= score[:correct] %></td>
+    <td class="leftline" align="right"><%= score[:correct] %></td>
     <td align="right"><%= score[:tendency] %></td>
-    <td align="right" style="border-right: 2px solid silver"><%= score[:wrong] %></td>
-    <td align="right" style="border-right: 2px solid silver"><%= score[:submitted] %></td>
-    <td align="right"><%= number_with_precision score[:average], precision: 2 %></td>
+    <td align="right"><%= score[:wrong] %></td>
+    <td class="leftline" align="right"><%= score[:submitted] %></td>
+    <td class="leftline" align="right"><%= number_with_precision score[:average], precision: 2 %></td>
     <% if current_user.admin %>
       <td><%= check_box_tag 'payment_received[]', score[:user].id, score[:user].payment_received %></td>
     <% end %>
   </tr>
-  <% end %>
+<% end -%>
 </table>
   <% if current_user.admin %>
     <p style="text-align: center;"><%= submit_tag 'Zahlungen speichern' %></p>
