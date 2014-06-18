@@ -31,9 +31,11 @@
           <!-- Top-5 Ende -->
         <% end %>
 
+<% cache("hof") do -%>
         <div id="halloffame">
           <%= render :partial => 'shared/hof' %>
         </div>
+<% end -%>
 
         <div style="text-align:center;font-size:80%;">
           <p>Bookie &copy;2010, 2012 by Sigi</p>

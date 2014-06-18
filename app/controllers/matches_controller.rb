@@ -64,6 +64,8 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     if @match.update_attributes(params[:match])
       flash[:notice] = "Die Daten für die Begegnung '#{@match}' wurden geändert.".html_safe
+      expire_action :controller => :bets, :action => :scoreboard
+      expire_fragment "hof"
       redirect_to :action => 'list'
     else
       render :action => 'edit'
