@@ -26,6 +26,7 @@
               end 
   rowclass += "newrank " if putrank
   rowclass += "endtop " if i == Prize::PROGRESSION.length
+  rowclass += "myscore " if current_user == score[:user]
 -%>
   <tr class="<%= rowclass %><%= i%2 == 0 ? 'even' : 'odd' %>">
     <td style="color: black;" align="right"> <%=h putrank && score[:rank] || "" %> </td>
