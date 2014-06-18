@@ -94,7 +94,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     request_store (1.0.5)
-    sass (3.3.8)
+    sass (3.2.19)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -131,6 +131,7 @@ DEPENDENCIES
   rails (~> 3.2)
   rails-i18n
   rails_autolink
+  sass (~> 3.2.0)
   sass-rails
   scrypt
   sqlite3
