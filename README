@@ -1,0 +1,13 @@
+This is a Rails web application to manage a friendly soccer betting
+community or office betting pool.
+
+There is UI for user registration, but not much else in that regard.
+
+Everything related to the actual tournament, such as names of teams,
+divisions as well as actual matches, can be entered via the UI.  This is
+enabled for all users who have the 'admin' attribute set to 'true' in the
+database.  This needs to be done manually.
+
+Other than that, it's all a bit rough around the edges, and a lot of the
+code needs some serious refactoring.  There are no unit tests.  There is
+legacy code as this started out as a Rails 1.2.x application.
