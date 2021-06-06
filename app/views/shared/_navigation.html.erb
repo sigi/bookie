@@ -1,0 +1,13 @@
+<h3>Menü</h3>
+<%#<li style="background: red;"><a style="color:white;" href="ranks.html">Endergebnis</a></li>%>
+<li><%= link_to 'Stammtisch', :controller => '/comments', :action => 'list' %></li>
+<li><%= link_to 'Tippen', :controller => '/bets', :action => 'next', :id => 4 %></li>
+<li><%= link_to 'Rangliste', :controller => '/bets', :action => 'scoreboard' %></li>
+<li><%= link_to 'Gewinne', :controller => '/prizes', :action => 'index' %></li>
+<% if current_user.admin %>
+  <li><%= link_to 'Begegnungen', :controller => '/matches', :action => 'last', :id => 4 %></li>
+  <li><%= link_to 'Mannschaften', teams_path %></li>
+  <li><%= link_to 'Spielgruppen', divisions_path %></li>
+  <!--<li><%#= link_to 'Konten', users_path</li>%>-->
+<% end %>
+<li style="background: #fdb;"><%= link_to 'Abmelden', user_session_path, :method => :delete %></li>

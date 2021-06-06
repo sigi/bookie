@@ -1,0 +1,90 @@
+<h2>Rangliste</h2>
+
+<%= form_tag url_for(:controller => "/users", :action => "register_payments") do %>
+<table id="scoreboard" style="color: rgb(140, 140, 140);">
+  <tr style="border: 1px solid black;">
+    <th colspan="2">Platzierung</th>
+    <th align="center" style="border-right: 1px solid white;">Pkt.</th>
+    <th align="center" style="border-right: 1px solid white;" colspan="4">Punktverlauf</th>
+    <th align="center">K</th>
+    <th align="center">T</th>
+    <th align="center" style="border-right: 1px solid white;">F</th>
+    <th align="center" style="border-right: 1px solid white;">#</th>
+    <th align="center">&Oslash;</th>
+    <% if current_user.admin %>
+      <th align="center">&euro;</th>
+    <% end %>
+  </tr>
+<% @score_board.results.each_index do |i|
+  score = @score_board[i]
+  putrank = i==0 || score[:rank] > @score_board[i-1][:rank]
+  prize = Prize.new(score[:rank])
+  rowclass = if i < Prize::PROGRESSION.length
+                "topscore "
+              else
+                ""
+              end 
+  rowclass += "newrank " if putrank
+  rowclass += "endtop " if i == Prize::PROGRESSION.length
+  rowclass += "myscore " if current_user == score[:user]
+-%>
+  <tr class="<%= rowclass %><%= i%2 == 0 ? 'even' : 'odd' %>">
+    <td style="color: black;" align="right"> <%=h putrank && score[:rank] || "" %> </td>
+    <td><%= link_to score[:user].real_name, { :controller => 'bets',
+            :action => 'last', :id => 4, :uid => score[:user].id }, { :class => 'uid_link' } %>
+          <% if @hof[:correct].select {|e| e[:user] == score[:user] }.any? %>
+              <%= image_tag 'star_medal_gold_small.png' %>
+          <% end %>
+          <% if @hof[:tendency].select {|e| e[:user] == score[:user] }.any? %>
+              <%= image_tag 'star_medal_silver_small.png' %>
+          <% end %>
+    </td>
+    <td class="rightline" style="color: black;" align="right">
+      <b><%=h score[:score] %></b></td>
+    <% score[:change].last(4).each_with_index do |s, i| -%>
+    <td align="right"><%= s %></td>
+    <% end -%>
+    <td class="leftline" align="right"><%= score[:correct] %></td>
+    <td align="right"><%= score[:tendency] %></td>
+    <td align="right"><%= score[:wrong] %></td>
+    <td class="leftline" align="right"><%= score[:submitted] %></td>
+    <td class="leftline" align="right"><%= number_with_precision score[:average], precision: 2 %></td>
+    <% if current_user.admin %>
+      <td><%= check_box_tag 'payment_received[]', score[:user].id, score[:user].payment_received %></td>
+    <% end %>
+  </tr>
+<% end -%>
+</table>
+  <% if current_user.admin %>
+    <p style="text-align: center;"><%= submit_tag 'Zahlungen speichern' %></p>
+  <% end %>
+<% end %>
+<div style="font-size:70%">
+  <p>
+    <b>Legende:</b> K/T/F:&nbsp;Anzahl <b>K</b>orrekt/<b>T</b>endenziell/<b>F</b>alsch
+    getippter Begegnungen; #:&nbsp;Gesamtzahl mitgetippter Begegnungen;
+    &Oslash;:&nbsp;durchschnittliches Punktergebnis pro getipptem
+    Spiel;  &Delta;:&nbsp;Punktveränderung durch letzte Begegnung
+  </p>
+  <p><b>Punktwertung:</b></p>
+  <p>Man bekommt um so mehr Punkte, je näher man mit seinem Tipp am tatsächlichen Spielergebnis lag:</p>
+  <ul>
+    <li>Ergebnis korrekt getippt = <b>20 Punkte</b></li>
+    <li>Ergebnis falsch, aber Tordifferenz korrekt = <b>15 Punkte</b>; dies gilt auch bei Unentschieden,
+      wenn die Höhe des Unentschieden höchstens um 1 Tor falsch getippt wurde.</li>
+    <li>Sieger der Partie korrekt, Tordifferenz falsch = <b>15 Punkte minus 2 Punkte für jedes Tor Abweichung</b>
+      von der tatsächlich erzielten Tordifferenz; <b>bei Unentschieden je 2 Punkte Abzug ab dem
+        zweiten Tor Abweichung</b> von der tatsächlich erzielten Höhe des Unentschieden.</li>
+    <li>alle anderen Fälle = <b>0 Punkte</b></li>
+  </ul>
+  <p>Die folgenden Beispiele illustrieren dies:</p>
+  <table>
+    <tr><th>Tipp</th><th>Erg.</th><th>Pkt.</th><th>Erklärung</th></tr>
+    <tr><td>1:1</td><td>1:1</td><td>20</td><td>korrekter Tipp</td></tr>
+    <tr><td>1:0</td><td>2:1</td><td>15</td><td>korrekte Tordifferenz getippt</td></tr>
+    <tr><td>0:0</td><td>1:1</td><td>15</td><td>"Unentschieden" korrekt vorhergesagt; Höhe um nur 1 Tor falsch; kein Abzug von den vollen 15 Punkten</td></tr>
+    <tr><td>0:0</td><td>3:3</td><td>11</td><td>"Unentschieden" korrekt vorhergesagt; Höhe um 3 Tore falsch, daher 4 Punkte Abzug von den vollen 15 Punkten<td></tr>
+    <tr><td>2:1</td><td>4:0</td><td>9</td><td>Tendenz korrekt vorhergesagt; 6 Punkte Abzug weil Differenz »1« vorausgesagt, aber »4« tatsächlich erzielt wurde</td></tr>
+    <tr><td>1:1</td><td>0:1</td><td>0</td><td>Spielausgang falsch getippt; keine Punkte</td></tr>
+  </table>
+</div>

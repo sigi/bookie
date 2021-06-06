@@ -1,0 +1,17 @@
+<% if !@scoreboard.nil? %>
+  <div id="quickscore">
+    <h3>Top 5</h3>
+    <table>
+      <tr>
+        <th>Rang</th> <th>Spieler</th> <th>Pkt.</th>
+      </tr>
+      <% for score in @scoreboard.slice(0..4) %>
+        <tr>
+          <td align="right"><%=h score[:rank] %></td>
+          <td><%= link_to_user score[:user] %></td>
+          <td align="right"><%=h score[:score] %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

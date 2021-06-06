@@ -1,0 +1,15 @@
+<h3><%=h current_time %></h3>
+
+<p>
+  <b>Hallo <%=h current_user.real_name %></b>, du hast
+  <b><%=h @score_board.score_for(current_user) || '?' %>&nbsp;Punkte</b>
+  und stehst damit auf <b>Rang <%=h @score_board.rank_for(current_user) || '?' %></b>.
+</p>
+
+<p><b>Zur Zeit im Pott: <%= link_to number_to_currency(Prize.jackpot), :controller => '/prizes', :action => 'index' %></b></p>
+
+<p>Viel Spaß beim Tippen!</p><hr/>
+
+<p style="text-align: center"><i>Nächste Begegnung</i></p>
+
+<p style="text-align: center"><%= display(Match.next(1).first, :include_date => true) %></p>

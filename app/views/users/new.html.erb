@@ -1,0 +1,16 @@
+<h1>Anmeldung zum Tippspiel</h1>
+
+<%= form_for @user, :url => account_path do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= render :partial => "form", :object => f %>
+  </p>
+  <p>
+    <%= f.submit "Anmelden" %>
+  </p>
+<% end %>
+
+<p>
+  Nach der Anmeldung geht es sofort weiter zum Tippspiel.
+  Bitte vergiss nicht, bald deinen Spieleinsatz zu entrichten.
+</p>

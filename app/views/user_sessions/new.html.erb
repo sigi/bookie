@@ -1,0 +1,20 @@
+<h1>Tippspiel Rezeption</h1>
+
+<p>Bitte gib deine Email-Adresse und dein Passwort ein.</p>
+
+<%= form_for @user_session, :url => user_session_path do |f| %>
+  <%= f.error_messages %>
+  <%= f.label :email, 'Email-Adresse' %><br />
+  <%= f.text_field :email %><br />
+  <br />
+  <%= f.label :password, 'Passwort' %><br />
+  <%= f.password_field :password %><br />
+  <br />
+  <%= f.check_box :remember_me %><%= f.label :remember_me, 'Eingeloggt bleiben' %><br />
+  <br />
+  <%= f.submit "Einloggen" %>
+<% end %>
+
+<p>
+  Noch nicht angemeldet? <%= link_to 'Hier klicken!', new_account_path %>
+</p>
