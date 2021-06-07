@@ -21,7 +21,7 @@ class Prize
 
   def self.jackpot(refresh = false)
     if refresh || !@jackpot
-      @jackpot = User.count(:conditions => {:wagering => true}) * STAKE
+      @jackpot = User.where(wagering: true).count * STAKE
     end
     @jackpot
   end

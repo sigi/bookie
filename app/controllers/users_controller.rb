@@ -2,25 +2,26 @@ class UsersController < ApplicationController
 
   layout 'login', :only => [:new, :create]
 
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
-  before_filter :require_admin, :only => [:register_payments]
+  before_action :require_no_user, :only => [:new, :create]
+  before_action :require_user, :only => [:show, :edit, :update]
+  before_action :require_admin, :only => [:register_payments]
 
-  skip_before_filter :setup_scoreboard, :set_query_user, :only => [:new, :create]
-  
+  skip_before_action :setup_scoreboard, :set_query_user, :only => [:new, :create]
+
   def new
     @user = User.new
   end
-  
+
   def create
-    @user = User.new(params[:user])
-    if @user.save
+    params.permit!
+    @user = User.create(params[:user])
+    if @user
       redirect_to root_url
     else
       render :action => :new
     end
   end
-  
+
   def show
     @user = @current_user
   end
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
   def edit
     @user = @current_user
   end
-  
+
   def update
     @user = @current_user # makes our views "cleaner" and more consistent
     if @user.update_attributes(params[:user])

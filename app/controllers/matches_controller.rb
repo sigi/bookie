@@ -1,7 +1,7 @@
 # vim: fileencoding=utf-8
 class MatchesController < ApplicationController
 
-  before_filter :require_admin
+  before_action :require_admin
 
   def index
     list
