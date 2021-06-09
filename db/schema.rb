@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_09_120615) do
+ActiveRecord::Schema.define(version: 2021_06_09_144927) do
+
+  create_table "bets", force: :cascade do |t|
+    t.integer "result1", limit: 2, default: -1, null: false
+    t.integer "result2", limit: 2, default: -1, null: false
+    t.integer "user_id", null: false
+    t.integer "match_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["match_id"], name: "index_bets_on_match_id"
+    t.index ["user_id"], name: "index_bets_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "comment", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "divisions", force: :cascade do |t|
     t.string "name", null: false
@@ -33,13 +52,37 @@ ActiveRecord::Schema.define(version: 2021_06_09_120615) do
     t.index ["team2_id"], name: "index_matches_on_team2_id"
   end
 
+  create_table "specialbets", force: :cascade do |t|
+    t.integer "german_progression", default: 1, null: false
+    t.integer "tournament_winner_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tournament_winner_id"], name: "index_specialbets_on_tournament_winner_id"
+    t.index ["user_id"], name: "index_specialbets_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "real_name", null: false
+    t.boolean "admin", default: false, null: false
+    t.boolean "wagering", default: true, null: false
+    t.boolean "payment_received", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "bets", "matches"
+  add_foreign_key "bets", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "matches", "divisions"
   add_foreign_key "matches", "teams", column: "team1_id"
   add_foreign_key "matches", "teams", column: "team2_id"
+  add_foreign_key "specialbets", "teams", column: "tournament_winner_id"
+  add_foreign_key "specialbets", "users"
 end
