@@ -1,5 +1,5 @@
-class Specialbet < ActiveRecord::Migration
-  def self.up
+class CreateSpecialbets < ActiveRecord::Migration[6.0]
+  def change
     create_table :specialbets do |t|
       t.integer :special1_id, :null => false, :default => 1
       t.string  :special2
@@ -8,9 +8,5 @@ class Specialbet < ActiveRecord::Migration
       t.integer :user_id, :null => false
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :specialbets
   end
 end

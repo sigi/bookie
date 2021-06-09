@@ -1,11 +1,7 @@
-class Team < ActiveRecord::Migration
-  def self.up
+class CreateTeams < ActiveRecord::Migration[6.0]
+  def change
     create_table :teams do |t|
       t.string :name, :null => false
     end
-  end
-
-  def self.down
-    drop_table :teams
   end
 end

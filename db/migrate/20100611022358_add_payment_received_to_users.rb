@@ -1,9 +1,5 @@
-class AddPaymentReceivedToUsers < ActiveRecord::Migration
-  def self.up
+class AddPaymentReceivedToUsers < ActiveRecord::Migration[6.0]
+  def change
     add_column :users, :payment_received, :boolean, :default => false
-  end
-
-  def self.down
-    remove_column :users, :payment_received
   end
 end

@@ -1,5 +1,5 @@
-class Match < ActiveRecord::Migration
-  def self.up
+class CreateMatches < ActiveRecord::Migration[6.0]
+  def change
     create_table :matches do |t|
       t.integer :result1, :null => false, :default => -1, :limit => 4
       t.integer :result2, :null => false, :default => -1, :limit => 4
@@ -13,11 +13,5 @@ class Match < ActiveRecord::Migration
     add_index "matches", ["team1_id"], :name => "team1_id"
     add_index "matches", ["team2_id"], :name => "team2_id"
     add_index "matches", ["division_id"], :name => "division_id"
-  end
-
-  def self.down
-    remove_index "matches", :name => "team2_id"
-    remove_index "matches", :name => "team1_id"
-    drop_table :matches
   end
 end

@@ -1,5 +1,5 @@
-class User < ActiveRecord::Migration
-  def self.up
+class CreateUsers < ActiveRecord::Migration[6.0]
+  def change
     create_table :users do |t|
       t.string    :real_name,           :null => false
       t.string    :email,               :null => false                # optional, you can use login instead, or both
@@ -22,9 +22,5 @@ class User < ActiveRecord::Migration
       t.boolean   :admin,  :null => false, :default => false
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :users
   end
 end
