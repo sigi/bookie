@@ -3,7 +3,9 @@ class ApplicationController < ActionController::Base
   layout 'bookie'
 
   helper :all
-  protect_from_forgery
+  protect_from_forgery with: :exception
+
+  before_action :authenticate_user!
 
   before_action :setup_scoreboard, :set_query_user
 
