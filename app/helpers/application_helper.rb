@@ -26,7 +26,9 @@ module ApplicationHelper
   end
 
   def all_divisions
-    Division.find( :all, :order => 'name' )
+    Division
+      .all
+      .order('name ASC')
   end
 
   def cur_link( string )

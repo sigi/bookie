@@ -2,10 +2,10 @@
 class CommentsController < ApplicationController
 
   def list
-    @comments = Comment.paginate(:page => params[:page], 
-                                 :order => 'comments.created_at desc',
-                                 :include => :user,
-                                 :per_page => 10)
+    @comments = Comment
+                  .includes(:user)
+                  .page(params[:page])
+                  .order('comments.created_at DESC')
     #@vote = Vote.find( :first, :conditions => [ 'user_id = ?', @current_user.id ] )
     #if @vote.nil? then @vote = Vote.create( :option => 0, :user => @current_user ) end
   end
@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = Comment.find_by_id_and_user( params[:id], current_user )
+    @comment = Comment.find(params[:id])
   end
 
   def update

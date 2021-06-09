@@ -9,39 +9,49 @@ class MatchesController < ApplicationController
   end
 
   def list
-    @matches = Match.find( :all, :include => :division )
+    @matches = Match
+                 .includes(:division)
+                 .all
     @title = "Alle Begegnungen"
   end
 
   def last
     count = parse_count( params[:id] )
-    @matches = Match.find( :all, :limit => count,
-                           :conditions => [ 'date <= ?', Time.now.utc ],
-                           :order => 'date desc', :include => :division )
+    @matches = Match
+                 .includes(:division)
+                 .where('date <= ?', Time.now.utc)
+                 .limit(count)
+                 .order('date DESC')
     @title = "Vergangene Begegnungen"
     render :action => 'list'
   end
 
   def next
     count = parse_count( params[:id] )
-    @matches = Match.find( :all, :limit => count,
-                           :conditions => [ 'date > ?', Time.now.utc ],
-                           :order => 'date asc', :include => :division )
+    @matches = Match
+                 .includes(:division)
+                 .where('date > ?', Time.now.utc)
+                 .limit(count)
+                 .order('date ASC')
     @title = "Kommende Begegnungen"
     render :action => 'list'
   end
 
   def division
-    @division = Division.find( params[:id] )
-    @matches = Match.find( :all, :conditions => [ 'division_id = ?', params[:id] ],
-                           :order => 'date asc', :include => :division )
+    @division = Division.find(params[:id])
+    @matches = Match
+                 .includes(:division)
+                 .where(division: @division)
+                 .order('date ASC')
     @title = @division.name
     render :action => 'list'
   end
 
   def new
     @match = Match.new
-    last_match = Match.find( :first, :order => 'date desc' )
+    last_match = Match
+                   .order('date DESC')
+                   .first
     @match.date = if last_match.nil? then Time.now else last_match.date end
   end
 

@@ -1,54 +1,86 @@
-<% 
-   all_teams = Team.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] } 
+<%
+  all_teams = Team.all.order('name ASC').collect do |o|
+    [o.name, o.id]
+  end
 %>
 
 <h2>Tipps von Spieler '<%= @query_user.real_name %>'</h2>
 
-<%= render( :partial => 'shared/matchnavi' ) %>
+<%= render(:partial => 'shared/matchnavi') %>
 
-<% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
+<% if flash[:notice] %>
+  <p class="notice">
+    <%= flash[:notice] %>
+  </p>
+<% end %>
 
 <h3>Sondertipps</h3>
 
 <p style="width:600px;margin: auto; margin-bottom: 1em;font-size:small;">
-<% if @query_user == current_user %>
-Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels abgegeben
-worden sein.  Eure Tipps sind <i>beliebig</i> und werden nicht auf
-Sinnhaftigkeit geprüft.  Richtige Antwort gibt am Ende Punkte,
-falsche Antwort nix.<br/><% else %>
-Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
-vergangene Tipps eingesehen und nicht verändert werden.  Um zu Deinen
-eigenen Tipps zurückzukehren, wähle »Tippen« aus dem Menü aus.
-<% if current_user.admin %><span style="background:red;color:white">
-Achtung: Admin-Modus!</span><% end %>
-<% end %>
+  <% if @query_user == current_user %>
+    Alle Sondertipps müssen bis 5 Minuten vor Beginn des Eröffnungsspiels
+    abgegeben
+    worden sein. Eure Tipps sind <i>beliebig</i> und werden nicht auf
+    Sinnhaftigkeit geprüft. Richtige Antwort gibt am Ende Punkte,
+    falsche Antwort nix.<br/>
+  <% else %>
+    Du betrachtest die Tipps eines Mitspielers. In diesem Modus können nur
+    vergangene Tipps eingesehen und nicht verändert werden. Um zu Deinen
+    eigenen Tipps zurückzukehren, wähle »Tippen« aus dem Menü aus.
+    <% if current_user.admin %>
+      <span style="background:red;color:white">Achtung: Admin-Modus!</span>
+    <% end %>
+  <% end %>
 </p>
 
-<% if ( current_user.admin && current_user != @query_user ) ||
-      ( @special.open? && current_user == @query_user ) %>
+<% if (current_user.admin && current_user != @query_user) ||
+  (@special.open? && current_user == @query_user) %>
   <%= form_tag :action => :update_special, :id => @special.id do %>
     <table style="margin:auto" cellspacing="10">
-      <tr><td>Wer wird Weltmeister 2014?<br/><i>(20 Punkte)</i></td>
-        <td><%= select( 'special', 'special1_id', all_teams) %></td></tr>
-      <tr><td>Wie weit kommt Deutschland?<br/><i>(10 Punkte)</i></td>
-        <td><%= select( 'special', 'special2', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
-      <tr><td>Wie weit kommt Brasilien?<br/><i>(10 Punkte)</i></td>
-        <td><%= select( 'special', 'special3', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
-      <tr><td>Wie weit kommt Italien?<br/><i>(10 Punkte)</i></td>
-        <td><%= select( 'special', 'special4', [ 'Vorrunde', 'Achtelfinale', 'Viertelfinale', 'Halbfinale', 'Finale' ] ) %></td></tr>
-        <tr><td colspan="2" align="center"><%= submit_tag "Sondertipps abspeichern" %></td></tr>
-      </table>
+      <tr>
+        <td>
+          Wer wird Europameister 2021?<br/>
+          <i>(20 Punkte)</i>
+        </td>
+        <td>
+          <%= select('special', 'tournament_winner_id', all_teams) %>
+        </td>
+      </tr>
+      <tr>
+        <td>Wie weit kommt Deutschland?<br/>
+          <i>(10 Punkte)</i>
+        </td>
+        <td>
+          <%= select('special',
+                     'german_progression',
+                     [['Vorrunde', 1],
+                      ['Achtelfinale', 2],
+                      ['Viertelfinale', 3],
+                      ['Halbfinale', 4],
+                      ['Finale', 5]]) %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <%= submit_tag "Sondertipps abspeichern" %>
+        </td>
+      </tr>
+    </table>
   <% end %>
+
 <% else %>
+
   <table style="margin:auto" cellspacing="10">
-    <tr><th>Frage</th><th>Dein Tipp...</td>
-      <tr><td>Wer wird Weltmeister 2014?<br/><i>(20 Punkte)</i></td>
-        <td><%= @special.special1.name %></td></tr>
-      <tr><td>Wie weit kommt Deutschland?<br/><i>(10 Punkte)</i></td>
-        <td><%= @special.special2 %></td></tr>
-      <tr><td>Wie weit kommt Brasilien?<br/><i>(10 Punkte)</i></td>
-        <td><%= @special.special3 %></td></tr>
-      <tr><td>Wie weit kommt Italien?<br/><i>(10 Punkte)</i></td>
-        <td><%= @special.special4 %></td></tr>
-      </table>
+    <tr>
+      <th>Frage</th>
+      <th>Dein Tipp...</th>
+    <tr>
+      <td>Wer wird Europameister 2021?<br/><i>(20 Punkte)</i></td>
+      <td><%= @special.tournament_winner&.name %></td>
+    </tr>
+    <tr>
+      <td>Wie weit kommt Deutschland?<br/><i>(10 Punkte)</i></td>
+      <td>Runde <%= @special.german_progression %></td>
+    </tr>
+  </table>
 <% end %>

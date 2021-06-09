@@ -1,7 +1,9 @@
 <p style="margin-top:0;margin-bottom:0.5em;font-weight:bold">
-Für diese Begegnung wurden folgende Tipps abgegeben:</p>
-<% @bets.each do |a| result = a[0]; bets = a[1] %>
- <span id="betsformatch"
-       class="<%= bets[0].score.direction.to_s %>"><%= result.to_s %></span>
- <b><%= bets.collect{ |b| b.user.real_name }.join(', ') %></b><p style="clear:left;margin:1px"></p>
+  Für diese Begegnung wurden folgende Tipps abgegeben:</p>
+<% @bets.each do |a|
+  result = a[0]; bets = a[1] %>
+  <span id="betsformatch"
+        class="<%= bets[0].score.direction.to_s %>"><%= result.to_s %></span>
+  <b><%= bets.collect { |b| b.user.real_name }.join(', ') %></b>
+  <p style="clear:left;margin:1px"></p>
 <% end %>
