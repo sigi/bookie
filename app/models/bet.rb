@@ -30,9 +30,11 @@ class Bet < ActiveRecord::Base
   end
 
   def self.get_scores(scorer = ExactScore)
-    bets = find( :all, :include => [ :match, :user ],
-                 :conditions => [ 'matches.date <= ? and matches.result1 * matches.result2 >= 0', Time.now.utc ],
-                 :order => 'matches.date asc' )
+    bets = Bet
+             .includes(:match, :user)
+             .where('matches.date <= ? AND matches.result1 * matches.result2 >= 0',
+                    Time.now.utc)
+             .order('matches.date ASC')
     ScoreBoard.new(bets, scorer)
   end
 
