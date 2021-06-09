@@ -1,91 +1,45 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100611022358) do
+ActiveRecord::Schema.define(version: 2021_06_09_120615) do
 
-  create_table "bets", :force => true do |t|
-    t.integer  "result1",    :limit => 4, :default => -1, :null => false
-    t.integer  "result2",    :limit => 4, :default => -1, :null => false
-    t.integer  "user_id",                                 :null => false
-    t.integer  "match_id",                                :null => false
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+  create_table "divisions", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_index "bets", ["match_id"], :name => "match_id"
-  add_index "bets", ["user_id"], :name => "user_id"
-
-  create_table "comments", :force => true do |t|
-    t.string   "text",       :null => false
-    t.integer  "user_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "matches", force: :cascade do |t|
+    t.integer "result1", limit: 2, default: -1, null: false
+    t.integer "result2", limit: 2, default: -1, null: false
+    t.datetime "date", null: false
+    t.text "info"
+    t.integer "team1_id", null: false
+    t.integer "team2_id", null: false
+    t.integer "division_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["division_id"], name: "index_matches_on_division_id"
+    t.index ["team1_id"], name: "index_matches_on_team1_id"
+    t.index ["team2_id"], name: "index_matches_on_team2_id"
   end
 
-  create_table "divisions", :force => true do |t|
-    t.string "name", :null => false
+  create_table "teams", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "matches", :force => true do |t|
-    t.integer  "result1",     :limit => 4, :default => -1, :null => false
-    t.integer  "result2",     :limit => 4, :default => -1, :null => false
-    t.datetime "date",                                     :null => false
-    t.text     "info"
-    t.integer  "team1_id",                                 :null => false
-    t.integer  "team2_id",                                 :null => false
-    t.integer  "division_id",                              :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-  end
-
-  add_index "matches", ["division_id"], :name => "division_id"
-  add_index "matches", ["team1_id"], :name => "team1_id"
-  add_index "matches", ["team2_id"], :name => "team2_id"
-
-  create_table "specialbets", :force => true do |t|
-    t.integer  "special1_id", :default => 1, :null => false
-    t.string   "special2"
-    t.string   "special3"
-    t.string   "special4"
-    t.integer  "user_id",                    :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "teams", :force => true do |t|
-    t.string "name", :null => false
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "real_name",                             :null => false
-    t.string   "email",                                 :null => false
-    t.string   "crypted_password",                      :null => false
-    t.string   "password_salt",                         :null => false
-    t.string   "persistence_token",                     :null => false
-    t.string   "perishable_token",                      :null => false
-    t.integer  "login_count",        :default => 0,     :null => false
-    t.integer  "failed_login_count", :default => 0,     :null => false
-    t.datetime "last_request_at"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
-    t.string   "current_login_ip"
-    t.string   "last_login_ip"
-    t.boolean  "locked",             :default => false, :null => false
-    t.boolean  "admin",              :default => false, :null => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.boolean  "wagering",           :default => true
-    t.boolean  "payment_received",   :default => false
-  end
-
+  add_foreign_key "matches", "divisions"
+  add_foreign_key "matches", "teams", column: "team1_id"
+  add_foreign_key "matches", "teams", column: "team2_id"
 end
