@@ -56,7 +56,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'will_paginate'
-gem 'active_scaffold'
+#gem 'active_scaffold'
 gem 'dynamic_form'
 gem 'rails_autolink'
 gem 'rails-i18n'
