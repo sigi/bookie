@@ -1,7 +1,7 @@
 class Bet < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :match, :include => :division
+  belongs_to :match
 
   validates_numericality_of :result1, :result2, :only_integer => true
 

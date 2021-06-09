@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Bookie</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
+    <%#= stylesheet_link_tag 'application', media: 'all','data-turbolinks-track': 'reload' %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
 
-<body>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <div id="container">
 
-<%= yield %>
-</body>
+      <!-- Sidebar -->
+      <div id="sidebar">
+
+        <!-- Uebersichtsinformation -->
+        <div id="info">
+          <%= render :partial => 'shared/greeting' %>
+        </div>
+        <!-- Uebersichtsinformation Ende -->
+
+        <!-- Navigation -->
+        <ul id="navigation">
+          <%= render :partial => 'shared/navigation' %>
+        </ul>
+        <!-- Navigation Ende -->
+
+        <% if false %>
+          <!-- Top-5 -->
+          <%= render :partial => 'shared/score_board' %>
+          <!-- Top-5 Ende -->
+        <% end %>
+
+<% cache("hof") do -%>
+        <div id="halloffame">
+          <%#= render :partial => 'shared/hof' %>
+        </div>
+<% end -%>
+
+        <div style="text-align:center;font-size:80%;">
+          <p>Bookie &copy;2010, 2012 by Sigi</p>
+        </div>
+      </div>
+      <!-- Sidebar Ende -->
+
+      <!-- Hauptteil -->
+      <div id="content">
+        <% if current_user && current_user.wagering && !current_user.payment_received %>
+          <div style="margin-bottom: 1ex; padding: 1ex; font-size: 130%; font-weight: bold; border: 2px solid red;">
+            Falls du den Spieleinsatz noch nicht entrichtet hast: Tu es. Jetzt.
+            Bei Fragen: <tt><a href="mailto:frank@luithle.net">frank@luithle.net</a></tt>
+            <div style="font-size: 50%;">Diese Meldung wird dir angezeigt weil bei mir
+              noch kein Geld eingetroffen ist. Sie wird bald nicht mehr angezeigt werden, weil
+              deine Kennung dann gelöscht wird :-).</div>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+      <!-- Hauptteil Ende -->
+
+    </div>
+  </body>
 </html>

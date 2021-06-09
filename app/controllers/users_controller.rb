@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  layout 'login', :only => [:new, :create]
-
   before_action :require_admin, :only => [:register_payments]
 
   skip_before_action :setup_scoreboard, :set_query_user, :only => [:new, :create]
