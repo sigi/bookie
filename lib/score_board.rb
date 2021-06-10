@@ -9,6 +9,8 @@ class ScoreBoard
     @results = []
     scores = {}
 
+    return if bets.empty?
+
     User.all.each do |u|
       scores[u] = {
         :score => 0, :submitted => 0, :average => 0.0, :change => [0, 0, 0, 0],
