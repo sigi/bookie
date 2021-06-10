@@ -4,9 +4,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all',
+                          'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application',
+                          'data-turbolinks-track': 'reload' %>
   <title>Login</title>
-  <style type="text/css">
-    body { width: 600px; margin: 0 auto; }
+  <style>
+    body {
+      width: 600px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
