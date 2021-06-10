@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.1'
+ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
@@ -55,9 +55,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'will_paginate'
-#gem 'active_scaffold'
-gem 'dynamic_form'
-gem 'rails_autolink'
+# Miscellaneous helpers
+gem 'will_paginate', '~> 3.3.0'
+gem 'dynamic_form', '~> 1.1.4'
+gem 'rails_autolink', '~> 1.1.6'
 
-gem 'devise'
+# Devise
+gem 'devise', '~> 4.8.0'
