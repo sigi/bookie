@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_09_161042) do
+ActiveRecord::Schema.define(version: 2021_06_10_145413) do
 
   create_table "bets", force: :cascade do |t|
     t.integer "result1", limit: 2, default: -1, null: false

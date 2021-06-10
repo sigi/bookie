@@ -1,5 +1,2 @@
-class Division < ActiveRecord::Base
-
-  #has_many :matches
-
+class Division < ApplicationRecord
 end
