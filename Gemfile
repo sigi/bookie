@@ -59,6 +59,5 @@ gem 'will_paginate'
 #gem 'active_scaffold'
 gem 'dynamic_form'
 gem 'rails_autolink'
-gem 'rails-i18n'
 
 gem 'devise'
