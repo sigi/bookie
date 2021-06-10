@@ -33,11 +33,10 @@ private
   end
 
   def grouping
-    count = Match.count( :all,
-                         :conditions => [ 'division_id = :div and ' +
-                                          '( team1_id = :team1 and team2_id = :team2 ' +
-                                          'or team2_id = :team1 and team1_id = :team2 )',
-                                          { :div => division.id, :team1 => team1.id, :team2 => team2.id } ] )
+    count = Match
+              .where(division: division, team1: team1, team2: team2)
+              .or(Match.where(division: division, team1: team2, team2: team1))
+              .count
     if count > 0
       errors.add( :base, "Diese Paarung existiert bereits in dieser Gruppe (vielleicht in anderer Reihenfolge)." );
     end

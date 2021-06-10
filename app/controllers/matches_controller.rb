@@ -4,11 +4,6 @@ class MatchesController < ApplicationController
   before_action :require_admin
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  def list
     @matches = Match
                  .includes(:division)
                  .all
@@ -23,7 +18,7 @@ class MatchesController < ApplicationController
                  .limit(count)
                  .order('date DESC')
     @title = "Vergangene Begegnungen"
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def next
@@ -34,7 +29,7 @@ class MatchesController < ApplicationController
                  .limit(count)
                  .order('date ASC')
     @title = "Kommende Begegnungen"
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def division
@@ -44,7 +39,7 @@ class MatchesController < ApplicationController
                  .where(division: @division)
                  .order('date ASC')
     @title = @division.name
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def new
@@ -56,11 +51,12 @@ class MatchesController < ApplicationController
   end
 
   def create
+    params.permit!
     @match = Match.new(params[:match])
 
     if @match.save
       flash[:notice] = 'Die Begegnung wurde erstellt.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :action => 'new'
     end
@@ -71,12 +67,12 @@ class MatchesController < ApplicationController
   end
 
   def update
+    params.permit!
     @match = Match.find(params[:id])
-    if @match.update_attributes(params[:match])
+    if @match.update(params[:match])
       flash[:notice] = "Die Daten für die Begegnung '#{@match}' wurden geändert.".html_safe
-      expire_action :controller => :bets, :action => :scoreboard
       expire_fragment "hof"
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :action => 'edit'
     end
@@ -84,7 +80,7 @@ class MatchesController < ApplicationController
 
   def destroy
     Match.find(params[:id]).destroy
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
 end

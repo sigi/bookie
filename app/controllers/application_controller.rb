@@ -20,11 +20,7 @@ protected
   end
 
   def require_admin
-    unless current_user.admin
-      flash[:notice] = "Restricted area."
-      redirect_to root_url
-      false
-    end
+    redirect_to root_url unless current_user.admin
   end
 
   def setup_scoreboard

@@ -1,6 +1,6 @@
 <h3>Bearbeiten: <%= @match.display %></h3>
 
-<%= form_tag :action => 'update', :id => @match do %>
+<%= form_tag({ :action => 'update', :id => @match }, :method => 'put') do %>
   <%= render :partial => 'form' %>
   <p style="text-align:center"><%= submit_tag 'Speichern' %></p>
 <% end %>

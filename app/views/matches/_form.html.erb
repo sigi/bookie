@@ -1,11 +1,10 @@
 <%= error_messages_for 'match' %>
 
-<% 
-   all_teams = Team.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] } 
-   all_divisions = Division.find( :all, :order => 'name' ).collect { |o| [ o.name, o.id ] }
+<%
+   all_teams = Team.all.order('name ASC').collect { |o| [o.name, o.id] }
+   all_divisions = Division.all.order('name ASC').collect { |o| [o.name, o.id] }
 %>
 
-<!--[form:match]-->
 <table cellspacing="6">
   <tr>
     <td>Begegnung:</td>
@@ -29,4 +28,3 @@
     <td><%= text_area 'match', 'info', :rows => 5, :cols => 40  %></td>
   </tr>
 </table>
-<!--[eoform:match]-->

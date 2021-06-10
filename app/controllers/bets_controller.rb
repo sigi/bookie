@@ -43,7 +43,7 @@ class BetsController < ApplicationController
     @bets = Bet
               .includes(:user)
               .where('bets.match_id = ?', params[:id])
-              .order('users.real_name')
+              .order('user.real_name')
 
     bets_hsh = Hash.new
     bets.each do |b|
@@ -67,7 +67,7 @@ class BetsController < ApplicationController
     @bets = Bet
               .includes(:match)
               .where(match: { division: @division }, user: @query_user)
-              .order('matches.date ASC')
+              .order('match.date ASC')
     @title = @division.name
     render :action => 'list'
   end
