@@ -57,6 +57,9 @@
           <td align="center">
             <% if (current_user.admin && current_user != @query_user) || (bet.open? && current_user == @query_user)
                  display_submit = true %>
+              <%# Form for multiple model instances.
+                  'bets[]' is magic that will include the IDs of the instances.
+                  http://railscasts.com/episodes/165-edit-multiple-revised %>
               <%= fields_for 'bets[]', bet do |f| %>
                 <%= f.text_field :r1, size_options %>&nbsp;:
                 <%= f.text_field :r2, size_options %>

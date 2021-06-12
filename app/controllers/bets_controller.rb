@@ -92,6 +92,8 @@ class BetsController < ApplicationController
     end
   end
 
+  # 'update' action from a PUT request to '/bets'
+  # 'bets[]' hash is generated in the form via fields_for 'bets[]'
   def update
     err = false
 
