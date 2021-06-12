@@ -65,4 +65,5 @@ gem 'rails_autolink', '~> 1.1.6'
 
 # Devise
 gem 'devise', '~> 4.8.0'
+# Translations for Devise; customized for 'de' in config/locales/...
 gem 'devise-i18n'
