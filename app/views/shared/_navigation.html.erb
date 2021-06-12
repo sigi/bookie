@@ -1,6 +1,6 @@
 <h3>Menü</h3>
 <%#<li style="background: red;"><a style="color:white;" href="ranks.html">Endergebnis</a></li>%>
-<li><%= link_to 'Stammtisch', :controller => '/comments', :action => 'list' %></li>
+<li><%= link_to 'Stammtisch', comments_path %></li>
 <li><%= link_to 'Tippen', :controller => '/bets', :action => 'next', :id => 4 %></li>
 <li><%= link_to 'Rangliste', :controller => '/bets', :action => 'scoreboard' %></li>
 <li><%= link_to 'Gewinne', :controller => '/prizes', :action => 'index' %></li>

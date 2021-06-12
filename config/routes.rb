@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :matches
+  resources :comments
 
   resources :bets do
     collection do

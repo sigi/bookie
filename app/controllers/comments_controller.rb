@@ -1,7 +1,7 @@
 # vim: fileencoding=utf-8
 class CommentsController < ApplicationController
 
-  def list
+  def index
     @comments = Comment
                   .includes(:user)
                   .page(params[:page])
@@ -15,9 +15,9 @@ class CommentsController < ApplicationController
                            :text => params[ :comment ][ 'text' ] )
     if comment.save
       flash[:notice] = 'Dein Beitrag wurde hinzugefügt.'
-      redirect_to :action => 'list'
+      redirect_to action: 'index'
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
@@ -29,9 +29,9 @@ class CommentsController < ApplicationController
     edit
     if @comment.update_attributes( params[:comment] )
       flash[:notice] = "Dein Beitrag wurde geändert."
-      redirect_to :action => 'list'
+      redirect_to action: 'index'
     else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
     else
       flash[:note] = "Fehler beim Abstimmen."
     end
-    redirect_to :action => 'list'
+    redirect_to action: 'index'
   end
 
 end
