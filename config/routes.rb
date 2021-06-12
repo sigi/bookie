@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :matches
-  resources :bets
+
+  resources :bets do
+    collection do
+      put :update
+    end
+  end
 
   root to: "bets#scoreboard"
 

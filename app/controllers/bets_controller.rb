@@ -3,13 +3,8 @@ require 'result'
 class BetsController < ApplicationController
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  def list
     @bets = Bet
-              .includes(:match)
+              .includes(match: [:team1, :team2, :division])
               .where(user: @query_user)
               .order('matches.date ASC')
     @title = "Alle Begegnungen"
@@ -24,7 +19,7 @@ class BetsController < ApplicationController
               .order('matches.date DESC')
               .limit(parse_count params[:id])
     @title = "Vergangene Begegnungen"
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def next
@@ -36,7 +31,7 @@ class BetsController < ApplicationController
               .order('matches.date ASC')
               .limit(parse_count params[:id])
     @title = "Kommende Begegnungen"
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def bets_for_match
@@ -69,7 +64,7 @@ class BetsController < ApplicationController
               .where(match: { division: @division }, user: @query_user)
               .order('match.date ASC')
     @title = @division.name
-    render :action => 'list'
+    render :action => 'index'
   end
 
   def special
@@ -100,19 +95,20 @@ class BetsController < ApplicationController
   def update
     err = false
 
-    params[:bet].each do |id, r|
-      bet = Bet.find( id )
-      # admin darf fremde Tipps immer aendern, andere duerfen eigene, offene Tipps aendern
+    params[:bets].each do |id, r|
+      bet = Bet.find(id)
+      # Only open bets may be changed.
+      # Admins may change closed bets, but not their own.
       if (current_user.admin and bet.user_id != current_user.id) ||
         (bet.open? and bet.user_id == current_user.id)
-        bet.result = Result.new( r[:r1], r[:r2] )
-        err = true unless bet.valid?
+        bet.result = Result.new(r[:r1], r[:r2])
+        err = true unless bet.valid? # set this flag if any bet is invalid
         bet.save
       end
     end
 
-    flash[:notice] = if err then "Fehler beim Speichern." else "Tipps gespeichert." end
-    redirect_to :back
+    flash[:notice] = err && "Fehler beim speichern." || "Tipps gespeichert."
+    redirect_to bets_url
   end
 
   def scoreboard
