@@ -1,5 +1,5 @@
 <ul id="navibar">
-  <% for division in all_divisions %>
+  <% all_divisions.each do |division| %>
     <li>
       <%= link_to_unless_current(
             division.name,
