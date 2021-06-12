@@ -1,6 +1,6 @@
 class Prize
 
-  PROGRESSION = [ 30, 25, 20, 15, 10 ]
+  PROGRESSION = [ 50, 35, 15 ]
   STAKE = 5.0
 
   attr_reader :rank, :percentage, :amount
