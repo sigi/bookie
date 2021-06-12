@@ -55,6 +55,9 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Default translations for Rails
+gem 'rails-i18n', '~> 6.0.0'
+
 # Miscellaneous helpers
 gem 'will_paginate', '~> 3.3.0'
 gem 'dynamic_form', '~> 1.1.4'
@@ -62,3 +65,4 @@ gem 'rails_autolink', '~> 1.1.6'
 
 # Devise
 gem 'devise', '~> 4.8.0'
+gem 'devise-i18n'
