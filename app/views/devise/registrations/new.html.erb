@@ -1,5 +1,19 @@
 <h2><%= t('.sign_up') %></h2>
 
+<p>
+<ul style="text-align: left">
+  <li>
+    Dein Realname wird anderen Spielern angezeigt und erscheint so in der
+    Rangliste.
+  </li>
+  <li>
+    Deine E-Mail wird anderen Spielern <b>nicht</b> angezeigt. Die E-Mail ist
+    erforderlich zum Anmelden. Wir schicken dorthin auch Informationen, das
+    Tippspiel betreffend.
+  </li>
+</ul>
+</p>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
