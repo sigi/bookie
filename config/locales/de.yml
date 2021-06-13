@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    errors:
+      template:
+        header: Fehler beim Speichern
+        body: 'Die Änderung konnte nicht gespeichert werden:'
