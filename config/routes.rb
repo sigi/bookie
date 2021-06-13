@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :matches
   resources :comments
+  resources :specialbets
 
   resources :bets do
     collection do

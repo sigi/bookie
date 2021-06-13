@@ -67,31 +67,6 @@ class BetsController < ApplicationController
     render :action => 'index'
   end
 
-  def special
-    @special = Specialbet
-                 .includes(:tournament_winner)
-                 .where(user: @query_user)
-                 .first
-    @special ||= Specialbet.create(user: @query_user)
-  end
-
-  def update_special
-    @special = Specialbet.find( params[:id] )
-    if (@special.open? && @special.user_id == current_user.id) ||
-      (current_user.admin && @special.user_id != current_user.id)
-      if @special.update_attributes(params[:special])
-        flash[:notice] = "Die Sondertipps wurden gespeichert."
-        redirect_to :back
-      else
-        flash[:notice] = "Fehler beim Speichern."
-        render :action => 'special'
-      end
-    else
-      flash[:notice] = "Fehler beim Speichern."
-      render :action => 'special'
-    end
-  end
-
   # 'update' action from a PUT request to '/bets'
   # 'bets[]' hash is generated in the form via fields_for 'bets[]'
   def update

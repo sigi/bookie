@@ -25,7 +25,7 @@ private
   end
 
   def create_specialbet
-    Specialbet.create( :user => self )
+    Specialbet.create(user: self, tournament_winner: Team.first)
   end
 
   def update_prizes
