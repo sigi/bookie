@@ -37,7 +37,13 @@ class UsersController < ApplicationController
   end
 
   def register_payments
-    User.update_all( "payment_received = 't'", {:id => params[:payment_received]} )
+    User
+      .all
+      .update_all(payment_received: false)
+    User
+      .where(id: params[:payment_received])
+      .update_all(payment_received: true)
+    flash[:notice] = "Zahlungen aktualisiert."
     redirect_to :controller => "/bets", :action => "scoreboard"
   end
 
