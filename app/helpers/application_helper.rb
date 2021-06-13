@@ -28,7 +28,7 @@ module ApplicationHelper
   def all_divisions
     Division
       .all
-      .order('name ASC')
+      .order('id ASC')
   end
 
   def cur_link( string )

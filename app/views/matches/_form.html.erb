@@ -2,7 +2,7 @@
 
 <%
    all_teams = Team.all.order('name ASC').collect { |o| [o.name, o.id] }
-   all_divisions = Division.all.order('name ASC').collect { |o| [o.name, o.id] }
+   all_divisions = Division.all.order('id ASC').collect { |o| [o.name, o.id] }
 %>
 
 <table cellspacing="6">
