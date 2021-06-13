@@ -5,3 +5,46 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+#
+teams = %w[
+Deutschland
+Österreich
+Belgien
+Kroatien
+Tschechien
+Dänemark
+England
+Finnland
+Frankreich
+Ungarn
+Italien
+Niederlande
+Nordmazedonien
+Polen
+Portugal
+Russland
+Schottland
+Slovakei
+Spanien
+Schweden
+Schweiz
+Türkei
+Ukraine
+Wales
+]
+
+divisions = [
+  'Gruppe A',
+  'Gruppe B',
+  'Gruppe C',
+  'Gruppe D',
+  'Gruppe E',
+  'Gruppe F',
+  'Achtelf.',
+  'Viertelf.',
+  'Halbf.',
+  'Finale',
+]
+
+Team.create!(teams.map {|t| {name: t} })
+Division.create!(divisions.map {|d| {name: d} })
