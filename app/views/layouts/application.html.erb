@@ -49,7 +49,7 @@
 
       <!-- Hauptteil -->
       <div id="content">
-        <% if current_user && current_user.wagering && !current_user.payment_received %>
+        <% if false # current_user && current_user.wagering && !current_user.payment_received %>
           <div style="margin-bottom: 1ex; padding: 1ex; font-size: 130%; font-weight: bold; border: 2px solid red;">
             Falls du den Spieleinsatz noch nicht entrichtet hast: Tu es. Jetzt.
             Bei Fragen: <tt><a href="mailto:frank@luithle.net">frank@luithle.net</a></tt>
@@ -58,6 +58,14 @@
               deine Kennung dann gelöscht wird :-).</div>
           </div>
         <% end %>
+        <% if flash[:notice] %>
+          <p class="notice"><%= flash[:notice] %></p>
+        <% end %>
+
+        <% if flash[:alert] %>
+          <p class="alert"><%= flash[:alert] %></p>
+        <% end %>
+
         <%= yield %>
       </div>
       <!-- Hauptteil Ende -->
