@@ -1,0 +1,12 @@
+<ul id="navibar">
+  <% all_divisions.each do |division| %>
+    <li><%= link_to_unless_current division.name, merge_uid(controller: 'matches', action: 'division', id: division.id)  %></li>
+  <% end %>
+  <li><%= link_to_unless_current 'letzte vier', { controller: 'matches', action: 'last', id: 4 }, { :class => 'speciala' } %></li>
+  <li><%= link_to_unless_current 'kommende vier', { controller: 'matches', action: 'next', id: 4 }, { :class => 'speciala' } %></li>
+  <li><%= link_to_unless_current 'alle', matches_path, { :class => 'speciala' }
+  %></li>
+</ul>
+<div id="pageline">
+  <hr style="display:none;"/>
+</div>

@@ -1,6 +1,6 @@
 <h2>Begegnungen bearbeiten</h2>
 
-<%= render( :partial => 'shared/matchnavi' ) %>
+<%= render( :partial => 'shared/matchesnavi' ) %>
 
 <% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
 
@@ -16,7 +16,7 @@
     <th>Ergebnis</th>
     <th colspan="2">bearb.</th>
   </tr>
-  
+
 <% for match in @matches %>
   <tr>
     <td><%=h match.team1.name %> &ndash; <%=h match.team2.name %><br/>
