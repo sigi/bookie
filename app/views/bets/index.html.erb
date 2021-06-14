@@ -1,3 +1,9 @@
+<% if Specialbet.first.open? %>
+<p style="font-size: 1.5rem; color: #dd0000; margin-top: 0">
+  Nicht vergessen, die "Sondertipps" abzugeben!<br/>
+  (Noch möglich bis Dienstag um 17:55 Uhr)
+</p>
+<% end %>
 <h2>Tipps von Spieler '<%= @query_user.real_name %>'</h2>
 
 <% size_options = { :size => "2", :maxsize => "1" } %>
