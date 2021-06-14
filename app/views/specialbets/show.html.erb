@@ -33,7 +33,7 @@
   <% end %>
 </p>
 
-<% if true # if (current_user.admin && current_user != @query_user) || (@special.open? && current_user == @query_user) %>
+<% if (current_user.admin && current_user != @query_user) || (@specialbet.open? && current_user == @query_user) %>
   <%= form_with model: @specialbet do |f| %>
     <table style="margin:auto" cellspacing="10">
       <tr>
