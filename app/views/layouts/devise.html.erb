@@ -18,11 +18,11 @@
 </head>
 <body>
 <% if flash[:notice] %>
-  <p class="notice"><%= flash[:notice] %></p>
+  <p class="notice"><%=h flash[:notice] %></p>
 <% end %>
 
 <% if flash[:alert] %>
-  <p class="alert"><%= flash[:alert] %></p>
+  <p class="alert"><%=h flash[:alert] %></p>
 <% end %>
 
 <%= yield %>

@@ -2,8 +2,6 @@
 
 <%= render( :partial => 'shared/matchesnavi' ) %>
 
-<% if flash[:notice] %><p class="notice"><%= flash[:notice] %></p><% end %>
-
 <h3><%= @title %></h3>
 
 <p style="text-align:center;"><%= link_to 'Neue Begegnung anlegen', :action => 'new' %></p>
