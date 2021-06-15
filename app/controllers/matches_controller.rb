@@ -7,6 +7,7 @@ class MatchesController < ApplicationController
     @matches = Match
                  .includes(:division)
                  .all
+                 .order('date ASC')
     @title = "Alle Begegnungen"
   end
 
