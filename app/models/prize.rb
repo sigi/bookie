@@ -19,11 +19,8 @@ class Prize
     result
   end
 
-  def self.jackpot(refresh = false)
-    if refresh || !@jackpot
-      @jackpot = User.where(wagering: true).count * STAKE
-    end
-    @jackpot
+  def self.jackpot
+    User.where(wagering: true).count * STAKE
   end
 
 private

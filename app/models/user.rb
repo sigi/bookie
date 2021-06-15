@@ -12,10 +12,6 @@ class User < ActiveRecord::Base
   after_create :create_bets
   after_create :create_specialbet
 
-  after_create  :update_prizes
-  after_destroy :update_prizes
-  after_update  :update_prizes
-
 private
 
   def create_bets
@@ -26,10 +22,6 @@ private
 
   def create_specialbet
     Specialbet.create(user: self, tournament_winner: Team.first)
-  end
-
-  def update_prizes
-    Prize.jackpot(true)
   end
 
 end
