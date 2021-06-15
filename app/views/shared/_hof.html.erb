@@ -4,22 +4,40 @@
   <tr>
     <td><%= image_tag 'knight.jpg', :class => 'hofpic' %></td>
     <td valign="top"><b>Hoff-Verdienstkreuz am Bande:</b><br/>
-      <%= hof_linker( @hof, :correct ) %> mit <%= @hof[:correct][0][:correct] %>
-      korrekt getippten Ergebnissen.</td>
+      <% correct = @hof[:correct][0][:correct]
+         if correct > 2 %>
+        <%= hof_linker( @hof, :correct ) %> mit <%= correct %>
+        korrekt getippten Ergebnissen.
+      <% else %>
+        wird ermittelt...
+      <% end %>
+    </td>
     <td align="center"><%= image_tag 'star_medal_gold_orange.png' %></td>
   </tr>
   <tr>
     <td><%= image_tag 'netzer_head.jpg', :class => 'hofpic' %></td>
     <td valign="top"><b>Günter-Netzer-Award:</b><br/>
-      <%= hof_linker( @hof, :tendency ) %> mit <%= @hof[:tendency][0][:tendency] +
-        @hof[:tendency][0][:correct] %> korrekt getippten Tendenzen.</td>
+      <% tendency = @hof[:tendency][0][:tendency] + @hof[:tendency][0][:correct]
+         if tendency > 2 %>
+        <%= hof_linker( @hof, :tendency ) %> mit <%= tendency %>
+        korrekt getippten Tendenzen.
+      <% else %>
+        wird ermittelt...
+      <% end %>
+    </td>
     <td align="center"><%= image_tag 'star_medal_silver_blue.png' %></td>
   </tr>
   <tr>
     <td><%= image_tag 'beckmann_head.jpg', :class => 'hofpic' %></td>
     <td valign="top"><b>Reinhold-Beckmann-Medaille:</b><br/>
-      <%= hof_linker( @hof, :wrong ) %> mit <%= @hof[:wrong][0][:wrong] %>
-      komplett falschen Tipps.</td>
+      <% wrong = @hof[:wrong][0][:wrong]
+         if wrong > 2 %>
+        <%= hof_linker( @hof, :wrong ) %> mit <%= wrong %>
+        komplett falschen Tipps.
+      <% else %>
+        wird ermittelt...
+      <% end %>
+    </td>
     <td align="center"><%= image_tag 'poo.png' %></td>
   </tr>
 </table>
