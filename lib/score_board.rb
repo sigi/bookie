@@ -9,9 +9,9 @@ class ScoreBoard
     @results = []
     scores = {}
 
-    User.all.each do |u|
+    User.includes(:specialbet).all.each do |u|
       scores[u] = {
-        :score => 0, :submitted => 0, :average => 0.0, :change => [0, 0, 0, 0],
+        :score => calc_bonus(u), :submitted => 0, :average => 0.0, :change => [0, 0, 0, 0],
         :wrong => 0, :tendency => 0, :correct => 0, :open => 0, :undef => 0
       }
     end
@@ -59,6 +59,22 @@ class ScoreBoard
 
   def rank_for(user)
     @results_by_user[user].try(:[], :rank)
+  end
+
+  def calc_bonus(user)
+    return 0 if user.specialbet.open?
+    bonus = 0
+    bonus += if user.specialbet.tournament_winner.name == 'Italien'
+               20
+             else
+               0
+             end
+    bonus += if user.specialbet.german_progression == 2
+               10
+             else
+               0
+             end
+    bonus
   end
 
 end
