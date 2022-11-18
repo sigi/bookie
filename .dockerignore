@@ -1,0 +1,12 @@
+*.sqlite3
+.git/
+.bundle/
+.idea/
+log/
+tmp/
+node_modules/
+vendor/bundle/
+legacy/
+public/assets/
+public/packs/
+storage/

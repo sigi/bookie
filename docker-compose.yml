@@ -1,0 +1,112 @@
+version: '2.4'
+
+services:
+
+  # Base environment with Ruby runtime and system dependencies
+  # Does not contain any runtime dependencies (i.e. no Rails, no Gems, no NPMs)
+  base: &base
+    image: rails-base:1.0.0
+    build:
+      context: .
+      target: runtime
+      args:
+        RUBY_VERSION: '2.7.3'
+        PG_MAJOR: '12'
+        NODE_MAJOR: '14'
+        BUNDLER_VERSION: '2.2.15'
+    environment: &env
+      NODE_ENV: ${NODE_ENV:-development}
+      RAILS_ENV: ${RAILS_ENV:-development}
+      YARN_CACHE_FOLDER: /srv/node_modules/.yarn-cache
+    tmpfs:
+      - /tmp
+
+  # Runtime environment for Rails application; used as the basis for containers
+  # that we actually work with.
+  application: &application
+    <<: *base
+    stdin_open: true
+    tty: true
+    ports:
+      - '3000:3000'
+    volumes:
+      # The application itself:
+      - .:/srv:cached
+      # Dependencies and storage, mounted for MacOS performance reasons:
+      - bundle:/usr/local/bundle
+      - node_modules:/srv/node_modules
+      - rails_cache:/srv/tmp/cache
+      - packs:/srv/public/packs
+      - assets:/srv/public/assets
+      - storage:/srv/storage
+      - ./sqlite:/srv/sqlite
+    environment:
+      <<: *env
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-1}
+      WEBPACKER_DEV_SERVER_HOST: webpacker
+      BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
+      MALLOC_ARENA_MAX: 2
+      HISTFILE: /srv/log/.bash_history
+      EDITOR: vi
+
+  # Use this to build and run a production image
+  # For CI/CD we use a separate compose file that declares only this service
+  # and the required named volumes
+  production:
+    image: bookie:latest
+    container_name: bookie
+    build:
+      context: .
+      target: production
+    ports:
+      - '${PORT:-3000}:3000'
+    volumes:
+      - ./sqlite:/srv/sqlite
+    environment:
+      NODE_ENV: production
+      RAILS_ENV: production
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
+      WEB_CONCURRENCY: 2
+      MALLOC_ARENA_MAX: 2
+    command: bundle exec 'rake db:create && rake db:migrate && rails server -b 0.0.0.0'
+
+  # Open a shell in container. Can be used to run Rails console.
+  # Use as 'docker-compose run --rm shell'
+  # (use '--service-ports' flag if you need to expose ports!)
+  shell:
+    <<: *application
+    command: /bin/bash
+
+  # Start the Rails server.
+  # Use as 'docker-compose up server'
+  server:
+    <<: *application
+    command: bundle exec rails server -b 0.0.0.0
+
+  webpacker:
+    <<: *base
+    command: ./bin/webpack-dev-server
+    ports:
+      - '3035:3035'
+    volumes:
+      - .:/srv:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/srv/node_modules
+      - packs:/srv/public/packs
+      - assets:/srv/public/assets
+    environment:
+      <<: *env
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+
+volumes:
+  elasticsearch:
+  bundle:
+  node_modules:
+  rails_cache:
+  packs:
+  assets:
+  storage:
+  db:

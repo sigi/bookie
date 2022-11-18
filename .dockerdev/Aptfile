@@ -1,0 +1,5 @@
+imagemagick
+libsqlite3-dev
+sqlite3
+libpq-dev
+postgresql-client-12
