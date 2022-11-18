@@ -34,23 +34,25 @@ class ScoreBoard
       end
     }
 
-    # erster Platz hat immer Rang 1
-    scores_ary[0] << (rank=1)
-    entry = scores_ary[0][1]
-    entry[:average] = entry[:score].to_f / entry[:submitted].to_f unless entry[:submitted] == 0
-
-    (1...scores_ary.length).each { |i|
-      entry, last_entry = scores_ary[i][1], scores_ary[i-1][1]
-      # naechster Rang bei negativer Punktdifferenz
-      rank = i+1 if entry[:score] < last_entry[:score]
-      scores_ary[i] << rank
+    if scores_ary.length > 0
+      # erster Platz hat immer Rang 1
+      scores_ary[0] << (rank=1)
+      entry = scores_ary[0][1]
       entry[:average] = entry[:score].to_f / entry[:submitted].to_f unless entry[:submitted] == 0
-    } unless scores_ary.length == 1
 
-    @results = scores_ary.collect do |s|
-      { :user => s[0], :rank => s[2] }.merge( s[1] )
+      (1...scores_ary.length).each { |i|
+        entry, last_entry = scores_ary[i][1], scores_ary[i-1][1]
+        # naechster Rang bei negativer Punktdifferenz
+        rank = i+1 if entry[:score] < last_entry[:score]
+        scores_ary[i] << rank
+        entry[:average] = entry[:score].to_f / entry[:submitted].to_f unless entry[:submitted] == 0
+      } unless scores_ary.length == 1
+
+      @results = scores_ary.collect do |s|
+        { :user => s[0], :rank => s[2] }.merge( s[1] )
+      end
+      @results.each {|result| @results_by_user[ result[:user] ] = result}
     end
-    @results.each {|result| @results_by_user[ result[:user] ] = result}
   end
 
   def score_for(user)
