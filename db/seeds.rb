@@ -7,29 +7,37 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #
 teams = %w[
-Deutschland
-Österreich
+Argentinien
+Australien
 Belgien
-Kroatien
-Tschechien
+Brasilien
+Costa Rica
 Dänemark
+Deutschland
+Ecuador
 England
-Finnland
 Frankreich
-Ungarn
-Italien
+Ghana
+Iran
+Japan
+Kamerun
+Kanada
+Katar
+Kroatien
+Marokko
+Mexiko
 Niederlande
-Nordmazedonien
 Polen
 Portugal
-Russland
-Schottland
-Slovakei
-Spanien
-Schweden
+Saudi-Arabien
 Schweiz
-Türkei
-Ukraine
+Senegal
+Serbien
+Spanien
+Südkorea
+Tunesien
+Uruguay
+USA
 Wales
 ]
 
@@ -40,6 +48,8 @@ divisions = [
   'Gruppe D',
   'Gruppe E',
   'Gruppe F',
+  'Gruppe G',
+  'Gruppe H',
   'Achtelf.',
   'Viertelf.',
   'Halbf.',
