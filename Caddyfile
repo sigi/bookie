@@ -1,0 +1,3 @@
+tippspiel.luithle.net {
+  reverse_proxy production:3000
+}

@@ -56,6 +56,7 @@ services:
   # and the required named volumes
   production:
     image: bookie:latest
+    restart: unless-stopped
     container_name: bookie
     build:
       context: .
@@ -86,20 +87,21 @@ services:
     <<: *application
     command: bundle exec rails server -b 0.0.0.0
 
-  webpacker:
-    <<: *base
-    command: ./bin/webpack-dev-server
+  # The frontend HTTP proxy (ingress proxy)
+  # Handles TLS and certificates automatically
+  caddy:
+    image: caddy:2.6.2-alpine
+    restart: unless-stopped
+    depends_on:
+      - production
     ports:
-      - '3035:3035'
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
     volumes:
-      - .:/srv:cached
-      - bundle:/usr/local/bundle
-      - node_modules:/srv/node_modules
-      - packs:/srv/public/packs
-      - assets:/srv/public/assets
-    environment:
-      <<: *env
-      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
 
 volumes:
   elasticsearch:
@@ -110,3 +112,5 @@ volumes:
   assets:
   storage:
   db:
+  caddy_data:
+  caddy_config:
